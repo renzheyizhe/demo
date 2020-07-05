@@ -3,6 +3,7 @@ package com.example.rocketmqbind.producer;
 import com.example.rocketmqbind.bind.CustomBinding;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.common.message.MessageConst;
+import org.apache.rocketmq.spring.support.RocketMQHeaders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.messaging.Message;
@@ -36,4 +37,12 @@ public class ProducerSend {
         log.info("send ok..........");
     }
 
+    public void sendDelay(String content) {
+        MessageBuilder<String> builder = MessageBuilder.withPayload(content)
+                .setHeader(RocketMQHeaders.TAGS, "strTagDelay")
+                .setHeader("DELAY", "3");
+        Message<String> message = builder.build();
+        messageChannel.send(message);
+        log.info("sendDelay ok..........");
+    }
 }

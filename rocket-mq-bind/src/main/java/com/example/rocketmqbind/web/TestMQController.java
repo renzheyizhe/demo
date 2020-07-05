@@ -22,8 +22,14 @@ public class TestMQController {
     private ProducerSend send;
 
     @GetMapping("/send")
-    public String helloWorld2(String content) {
+    public String send(String content) {
         send.send(content);
+        return content;
+    }
+
+    @GetMapping("/sendDelay")
+    public String sendDelay(String content) {
+        send.sendDelay(content);
         return content;
     }
 
