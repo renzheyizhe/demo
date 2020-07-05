@@ -20,7 +20,7 @@
         <module>nacos-a</module>
         <module>nacos-sentinel-demo</module>
         <module>s-user</module>
-        <module>order</module>
+        <module>s-order</module>
     </modules>
 
 
