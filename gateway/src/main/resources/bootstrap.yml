@@ -1,0 +1,18 @@
+spring:
+  cloud:
+    nacos:
+      config:
+        #        server-addr: localhost:8848,localhost:8849,localhost:8850
+        server-addr: localhost:8848
+        file-extension: properties
+        #        shared-dataids: mysql.yml,redis.yml,printlog.yml,es.yml
+        refreshable-dataids: gateway.properties
+  application:
+    name: gateway
+  #   启动不配置环境，默认加载uat
+  profiles:
+    active: uat
+
+
+
+

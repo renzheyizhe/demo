@@ -1,0 +1,24 @@
+[
+  {
+    "id": "nacosa",
+    "predicates": [
+      {
+        "name": "Path",
+        "args": {
+          "pattern": "/nacosa/**"
+        }
+      }
+    ],
+    "filters": [
+      {
+        "name": "RewritePath",
+        "args": {
+          "regexp": "/nacosa/(?<remaining>.*)",
+          "replacement": "/${remaining}"
+        }
+      }
+    ],
+    "uri": "lb://nacosa",
+    "order": 0
+  }
+]

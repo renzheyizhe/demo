@@ -1,0 +1,21 @@
+spring:
+  cloud:
+    nacos:
+      config:
+        #        localhost 本机ip
+        #        server-addr: localhost:8848,localhost:8849,localhost:8850
+        server-addr: localhost:8848
+        #         文件后缀名
+        file-extension: properties
+        #        非主动刷新文件
+        #        shared-dataids: mysql.yml,redis.yml,printlog.yml,es.yml
+        #         要加载的文件 ，并且自动刷新配置
+        refreshable-dataids: user.properties
+  application:
+    name: user
+  #   启动不配置环境，默认加载uat
+  profiles:
+    active: uat
+
+
+
