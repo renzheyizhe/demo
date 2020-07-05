@@ -2,7 +2,6 @@ package com.example.rocketmqbind.producer;
 
 import com.example.rocketmqbind.bind.CustomBinding;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.rocketmq.common.message.MessageConst;
 import org.apache.rocketmq.spring.support.RocketMQHeaders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -30,7 +29,7 @@ public class ProducerSend {
 
     public void send(String content) {
         Map<String, Object> headers = new HashMap<>();
-        headers.put(MessageConst.PROPERTY_TAGS, "strTag");
+        headers.put(RocketMQHeaders.TAGS, "strTag");
         MessageHeaders messageHeaders = new MessageHeaders(headers);
         Message<String> message = MessageBuilder.createMessage(content, messageHeaders);
         this.messageChannel.send(message);
