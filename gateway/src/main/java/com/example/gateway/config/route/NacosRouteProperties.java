@@ -25,7 +25,7 @@ public class NacosRouteProperties {
     @Value("${nacos.group}")
     private String group;
 
-    @Value("${spring.cloud.nacos.config..namespace}")
+    @Value("${spring.cloud.nacos.config.namespace}")
     private String namespace;
 
     @Value("${spring.cloud.nacos.config.server-addr}")

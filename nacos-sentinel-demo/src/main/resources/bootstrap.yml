@@ -9,7 +9,7 @@ spring:
         file-extension: properties
         #        非主动刷新文件
         #        shared-dataids: mysql.yml,redis.yml,printlog.yml,es.yml
-        #         要加载的文件 ，并且自动刷新配置
+        #         要加载的默认配置文件 ，并且自动刷新配置
         refreshable-dataids: sentinel-demo.properties
   application:
     name: sentinel-demo
