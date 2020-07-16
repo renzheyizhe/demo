@@ -22,7 +22,7 @@ import java.util.concurrent.Executor;
  */
 @Slf4j
 @Configuration
-public class UserFlowListener {
+public class UserNacosListener {
 
     private static final String DATA_ID = "user-flow.properties";
 
