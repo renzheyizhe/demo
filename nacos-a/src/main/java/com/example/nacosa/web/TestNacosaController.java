@@ -28,6 +28,7 @@ public class TestNacosaController {
     @Autowired
     private TestServiceNacosaImpl testServiceNacosa;
 
+
     @GetMapping("/helloWorld")
     public String helloWorld(String id) {
         return testServiceNacosa.helloWorld(id);
@@ -37,5 +38,6 @@ public class TestNacosaController {
     public String helloWorld2(String id) {
         return testServiceNacosa.helloWorld2(id);
     }
+
 
 }

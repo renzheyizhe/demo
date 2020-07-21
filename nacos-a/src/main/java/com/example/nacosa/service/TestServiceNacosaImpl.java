@@ -16,9 +16,8 @@ public class TestServiceNacosaImpl {
     private String currentEnv;
 
 
-    @SentinelResource(value = "helloWorld", blockHandler = "helloWorldBlockHandler", blockHandlerClass = {BlackFallBackUtil.class}, fallback = "helloWorldFallback", fallbackClass =
+    @SentinelResource(value = "/test/helloWorld", blockHandler = "helloWorldBlockHandler", blockHandlerClass = {BlackFallBackUtil.class}, fallback = "helloWorldFallback", fallbackClass =
             {BlackFallBackUtil.class})
-//    @SentinelResource(value = "helloWorld")
     public String helloWorld(String id) {
         return "HelloWorld,do service r1," + id + "======" + currentEnv;
     }
