@@ -1,8 +1,8 @@
 package com.example.nacosa.web;
 
-import com.example.nacosa.service.TestServiceNacosaImpl;
+import com.alibaba.csp.sentinel.annotation.SentinelResource;
+import com.example.nacosa.error.BlackFallBackUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,18 +25,16 @@ public class TestNacosaController {
     private String currentEnv;
 
 
-    @Autowired
-    private TestServiceNacosaImpl testServiceNacosa;
-
-
+    @SentinelResource(value = "/test/helloWorld", blockHandler = "helloWorldBlockHandler", blockHandlerClass = {BlackFallBackUtil.class}, fallback = "helloWorldFallback", fallbackClass =
+            {BlackFallBackUtil.class})
     @GetMapping("/helloWorld")
     public String helloWorld(String id) {
-        return testServiceNacosa.helloWorld(id);
+        return "HelloWorld,do service r1," + id + "======" + currentEnv;
     }
 
     @GetMapping("/helloWorld2")
     public String helloWorld2(String id) {
-        return testServiceNacosa.helloWorld2(id);
+        return "HelloWorld2,do service r1," + id + "======" + currentEnv;
     }
 
 

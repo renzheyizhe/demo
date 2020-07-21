@@ -1,4 +1,4 @@
-package com.example.nacosa.service;
+package com.example.nacosa.error;
 
 import com.alibaba.csp.sentinel.slots.block.BlockException;
 
