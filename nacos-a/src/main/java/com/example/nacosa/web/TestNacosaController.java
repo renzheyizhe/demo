@@ -1,6 +1,5 @@
 package com.example.nacosa.web;
 
-import com.example.nacosa.feign.FeignNacosBDoLog;
 import com.example.nacosa.service.TestServiceNacosaImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,28 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/test")
 public class TestNacosaController {
 
-    @Autowired
-    private FeignNacosBDoLog bDoLog;
-
     @Value("${current.env}")
     private String currentEnv;
-
-    @GetMapping("/save")
-    public String save(String info) {
-        return "调用 nacos b 服务," + bDoLog.saveDoLog("生成唯一ID");
-    }
-
-    @GetMapping("/saveList")
-    public String saveList(String info) {
-        int i = 0;
-        while (i < 100) {
-            new Thread(() -> {
-                bDoLog.saveDoLog("生成唯一ID");
-            }).start();
-            i++;
-        }
-        return "调用 nacos b 服务, 批量生成ID";
-    }
 
 
     @Autowired
