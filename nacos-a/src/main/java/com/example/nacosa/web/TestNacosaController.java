@@ -25,7 +25,7 @@ public class TestNacosaController {
     private String currentEnv;
 
 
-    @SentinelResource(value = "/test/helloWorld", blockHandler = "helloWorldBlockHandler", blockHandlerClass = {BlackFallBackUtil.class}, fallback = "helloWorldFallback", fallbackClass =
+    @SentinelResource(value = "/helloWorld", blockHandler = "helloWorldBlockHandler", blockHandlerClass = {BlackFallBackUtil.class}, fallback = "helloWorldFallback", fallbackClass =
             {BlackFallBackUtil.class})
     @GetMapping("/helloWorld")
     public String helloWorld(String id) {
