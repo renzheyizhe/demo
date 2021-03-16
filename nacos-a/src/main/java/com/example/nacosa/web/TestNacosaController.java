@@ -28,12 +28,12 @@ public class TestNacosaController {
             {BlackFallBackUtil.class})
     @GetMapping("/helloWorld")
     public String helloWorld(String id) {
-        return "HelloWorld,do service r1," + id + "======" + currentEnv;
+        return "HelloWorld,do ............ " + id + "======" + currentEnv;
     }
 
     @GetMapping("/helloWorld2")
     public String helloWorld2(String id) {
-        return "HelloWorld2,do service r1," + id + "======" + currentEnv;
+        return "HelloWorld2,do ........... ," + id + "======" + currentEnv;
     }
 
 

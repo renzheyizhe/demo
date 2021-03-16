@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.util.Properties;
@@ -45,8 +46,8 @@ public class NacosaListener {
         configService = NacosFactory.createConfigService(properties);
     }
 
-    @Bean
-    public void userFlow() {
+    @Bean(name = "nacosaListenerRefresh")
+    public void nacosaListener() {
         try {
             configService.addListener(DATA_ID, DEFAULT_GROUP, new Listener() {
                 @Override

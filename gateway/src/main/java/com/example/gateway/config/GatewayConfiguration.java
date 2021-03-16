@@ -58,7 +58,7 @@ public class GatewayConfiguration {
         List<FlowRule> rules = new ArrayList<>();
         FlowRule rule = new FlowRule(name);
         // set limit qps to 20
-        rule.setCount(1);
+        rule.setCount(Long.MAX_VALUE);
         rule.setGrade(RuleConstant.FLOW_GRADE_QPS);
         rule.setLimitApp("default");
         rules.add(rule);
