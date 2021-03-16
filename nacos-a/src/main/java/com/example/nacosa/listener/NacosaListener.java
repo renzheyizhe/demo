@@ -24,7 +24,7 @@ import java.util.concurrent.Executor;
 @Configuration
 public class NacosaListener {
 
-    private static final String DATA_ID = "nacosa-flow.properties";
+    private static final String DATA_ID = "nacosa-other";
 
     private static final String DEFAULT_GROUP = "DEFAULT_GROUP";
 
@@ -56,7 +56,7 @@ public class NacosaListener {
 
                 @Override
                 public void receiveConfigInfo(String s) {
-                    log.info("nacosa-flow：{}", s);
+                    log.info("{}：{}", DATA_ID, s);
                 }
             });
         } catch (NacosException e) {
