@@ -1,8 +1,0 @@
-spring:
-  cloud:
-    nacos:
-      config:
-        # dat namespace 空间dataId
-        namespace: 96509aea-8458-4c41-86c2-1506a3d43a45
-      discovery:
-        namespace: 96509aea-8458-4c41-86c2-1506a3d43a45

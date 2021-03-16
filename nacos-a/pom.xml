@@ -18,13 +18,6 @@
 
     <dependencies>
 
-        <!--        &lt;!&ndash; boot-admin&ndash;&gt;-->
-        <!--        <dependency>-->
-        <!--            <groupId>de.codecentric</groupId>-->
-        <!--            <artifactId>spring-boot-admin-starter-client</artifactId>-->
-        <!--            <version>2.0.6</version>-->
-        <!--        </dependency>-->
-
         <!--Feign的依赖 -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
