@@ -18,7 +18,6 @@
     <modules>
         <module>gateway</module>
         <module>nacos-a</module>
-        <module>nacos-sentinel-demo</module>
         <module>s-user</module>
         <module>s-order</module>
         <module>rocket-mq-bind</module>
