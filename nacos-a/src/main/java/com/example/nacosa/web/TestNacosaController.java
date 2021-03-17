@@ -23,6 +23,9 @@ public class TestNacosaController {
     @Value("${current.env}")
     private String currentEnv;
 
+    @Value("${server.port}")
+    private String port;
+
 
     @SentinelResource(value = "/helloWorld", blockHandler = "helloWorldBlockHandler", blockHandlerClass = {BlackFallBackUtil.class}, fallback = "helloWorldFallback", fallbackClass =
             {BlackFallBackUtil.class})
@@ -33,7 +36,7 @@ public class TestNacosaController {
 
     @GetMapping("/helloWorld2")
     public String helloWorld2(String id) {
-        return "HelloWorld2,do ........... ," + id + "======" + currentEnv;
+        return port + "=HelloWorld2,do ........... ," + id + "======" + currentEnv;
     }
 
 
