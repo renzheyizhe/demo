@@ -15,6 +15,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Maven: org.projectlombok:lombok:1.18.0" level="project" />
     <orderEntry type="library" name="Maven: com.alibaba.cloud:spring-cloud-starter-alibaba-sentinel:2.1.1.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: com.alibaba.cloud:spring-cloud-alibaba-sentinel:2.1.1.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: com.alibaba.csp:sentinel-annotation-aspectj:1.7.0" level="project" />
@@ -149,7 +150,6 @@
     <orderEntry type="library" name="Maven: io.micrometer:micrometer-core:1.1.8" level="project" />
     <orderEntry type="library" name="Maven: org.hdrhistogram:HdrHistogram:2.1.9" level="project" />
     <orderEntry type="library" name="Maven: org.latencyutils:LatencyUtils:2.0.3" level="project" />
-    <orderEntry type="library" name="Maven: org.projectlombok:lombok:1.18.0" level="project" />
     <orderEntry type="library" name="Maven: cn.hutool:hutool-all:4.6.3" level="project" />
   </component>
 </module>

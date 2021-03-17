@@ -1,199 +1,292 @@
 /*
- Navicat Premium Data Transfer
+Navicat MySQL Data Transfer
 
- Source Server         : 5.7
- Source Server Type    : MySQL
- Source Server Version : 50728
- Source Host           : localhost:3307
- Source Schema         : nacos_devtest
+Source Server         : root
+Source Server Version : 50724
+Source Host           : localhost:3306
+Source Database       : nacos_devtest
 
- Target Server Type    : MySQL
- Target Server Version : 50728
- File Encoding         : 65001
+Target Server Type    : MYSQL
+Target Server Version : 50724
+File Encoding         : 65001
 
- Date: 24/06/2020 17:38:31
+Date: 2021-03-18 02:02:11
 */
 
-SET NAMES utf8mb4;
-SET FOREIGN_KEY_CHECKS = 0;
+SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
 -- Table structure for config_info
 -- ----------------------------
 DROP TABLE IF EXISTS `config_info`;
-CREATE TABLE `config_info`  (
+CREATE TABLE `config_info` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
-  `data_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'data_id',
-  `group_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
-  `content` longtext CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'content',
-  `md5` varchar(32) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT 'md5',
-  `gmt_create` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `gmt_modified` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
-  `src_user` text CHARACTER SET utf8 COLLATE utf8_bin COMMENT 'source user',
-  `src_ip` varchar(20) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT 'source ip',
-  `app_name` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
-  `tenant_id` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT '' COMMENT '租户字段',
-  `c_desc` varchar(256) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
-  `c_use` varchar(64) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
-  `effect` varchar(64) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
-  `type` varchar(64) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
-  `c_schema` text CHARACTER SET utf8 COLLATE utf8_bin,
+  `data_id` varchar(255) COLLATE utf8_bin NOT NULL COMMENT 'data_id',
+  `group_id` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `content` longtext COLLATE utf8_bin NOT NULL COMMENT 'content',
+  `md5` varchar(32) COLLATE utf8_bin DEFAULT NULL COMMENT 'md5',
+  `gmt_create` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `gmt_modified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
+  `src_user` text COLLATE utf8_bin COMMENT 'source user',
+  `src_ip` varchar(20) COLLATE utf8_bin DEFAULT NULL COMMENT 'source ip',
+  `app_name` varchar(128) COLLATE utf8_bin DEFAULT NULL,
+  `tenant_id` varchar(128) COLLATE utf8_bin DEFAULT '' COMMENT '租户字段',
+  `c_desc` varchar(256) COLLATE utf8_bin DEFAULT NULL,
+  `c_use` varchar(64) COLLATE utf8_bin DEFAULT NULL,
+  `effect` varchar(64) COLLATE utf8_bin DEFAULT NULL,
+  `type` varchar(64) COLLATE utf8_bin DEFAULT NULL,
+  `c_schema` text COLLATE utf8_bin,
   PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE INDEX `uk_configinfo_datagrouptenant`(`data_id`, `group_id`, `tenant_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = 'config_info' ROW_FORMAT = Dynamic;
+  UNIQUE KEY `uk_configinfo_datagrouptenant` (`data_id`,`group_id`,`tenant_id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=utf8 COLLATE=utf8_bin ROW_FORMAT=DYNAMIC COMMENT='config_info';
 
 -- ----------------------------
 -- Records of config_info
 -- ----------------------------
-INSERT INTO `config_info` VALUES (2, 'nacosa.properties', 'DEFAULT_GROUP', 'server.port=9100\r\nspring.cloud.nacos.discovery.server-addr=localhost:8848\r\nlogging.level.com.alibaba.nacos.client.naming=info\r\ncurrent.env=this is uat\r\n\r\n\r\nspring.cloud.sentinel.transport.dashboard=localhost:8999\r\nspring.cloud.sentinel.transport.port=8719\r\nspring.cloud.sentinel.transport.client-ip=localhost', '8bbd5e396a0236f27a5e89b312c8d2d9', '2020-05-12 17:18:40', '2020-06-23 10:15:54', NULL, '0:0:0:0:0:0:0:1', '', '4e7b1917-ca58-41e4-8d2a-d8539274883b', 'null', 'null', 'null', 'properties', 'null');
-INSERT INTO `config_info` VALUES (4, 'nacosa.properties', 'DEFAULT_GROUP', 'server.port=9100\r\nspring.cloud.nacos.discovery.server-addr=127.0.0.1:8848\r\nlogging.level.com.alibaba.nacos.client.naming=info\r\ncurrent.env=hello dat', '26bf543aa60771654fdec964543cc8cb', '2020-05-12 17:21:43', '2020-05-12 17:21:43', NULL, 'localhost', '', '96509aea-8458-4c41-86c2-1506a3d43a45', NULL, NULL, NULL, 'properties', NULL);
-INSERT INTO `config_info` VALUES (5, 'gateway.properties', 'DEFAULT_GROUP', 'spring.application.name=gateway\r\nserver.port=9000\r\n\r\nspring.cloud.sentinel.transport.dashboard=localhost:8999\r\nspring.cloud.sentinel.transport.port=9010\r\nspring.cloud.sentinel.transport.client-ip=localhost\r\n\r\n#nacos server\r\nspring.cloud.nacos.discovery.server-addr=localhost:8848\r\n#logging.level.com.alibaba.nacos.client.naming=info\r\n#gateway\r\nspring.cloud.gateway.discovery.locator.enabled=true\r\nspring.cloud.gateway.discovery.locator.lowerCaseServiceId=true\r\nlogging.level.org.springframework.cloud.gateway=trace\r\nlogging.level.org.springframework.http.server.reactive=debug\r\nlogging.level.org.springframework.web.reactive=debug\r\nlogging.level.reactor.ipc.netty=debug\r\nmanagement.endpoints.web.exposure.include=*\r\n#route json\r\nnacos.dataId=routes.json\r\nnacos.group=DEFAULT_GROUP', 'bcaaf3cffdffefa5ea09b4ea245998bd', '2020-05-13 14:00:23', '2020-06-23 10:16:23', NULL, '0:0:0:0:0:0:0:1', '', '4e7b1917-ca58-41e4-8d2a-d8539274883b', 'null', 'null', 'null', 'properties', 'null');
-INSERT INTO `config_info` VALUES (6, 'routes.json', 'DEFAULT_GROUP', '[\r\n    {\r\n        \"id\":\"nacosa\",\r\n        \"predicates\":[\r\n            {\r\n                \"name\":\"Path\",\r\n                \"args\":{\r\n                    \"pattern\":\"/nacosa/**\"\r\n                }\r\n            }\r\n        ],\r\n        \"filters\":[\r\n            {\r\n                \"name\":\"RewritePath\",\r\n                \"args\":{\r\n                    \"regexp\":\"/nacosa/(?<remaining>.*)\",\r\n                    \"replacement\":\"/${remaining}\"\r\n                }\r\n            }\r\n        ],\r\n        \"uri\":\"lb://nacosa\",\r\n        \"order\":0\r\n    }\r\n]', '635eca7f79b39821371302a77a691e50', '2020-05-13 14:49:43', '2020-05-13 15:02:59', NULL, 'localhost', '', '4e7b1917-ca58-41e4-8d2a-d8539274883b', 'null', 'null', 'null', 'json', 'null');
-INSERT INTO `config_info` VALUES (7, 'sentinel-demo.properties', 'DEFAULT_GROUP', 'server.port=12000\r\nspring.application.name=sentinel-demo\r\n\r\n# sentinel dashboard\r\nspring.cloud.sentinel.transport.dashboard=localhost:8999\r\nspring.cloud.sentinel.transport.port=12001\r\n\r\n# nacos server\r\nspring.cloud.nacos.discovery.server-addr=127.0.0.1:8848', 'd8bf0aa70a5905c575b30b615d8a6b9f', '2020-06-15 15:28:07', '2020-06-17 09:25:46', NULL, '0:0:0:0:0:0:0:1', '', '4e7b1917-ca58-41e4-8d2a-d8539274883b', 'null', 'null', 'null', 'properties', 'null');
+INSERT INTO `config_info` VALUES ('4', 'nacosa.properties', 'DEFAULT_GROUP', 0x7365727665722E706F72743D393130300D0A737072696E672E636C6F75642E6E61636F732E646973636F766572792E7365727665722D616464723D3132372E302E302E313A383834380D0A6C6F6767696E672E6C6576656C2E636F6D2E616C69626162612E6E61636F732E636C69656E742E6E616D696E673D696E666F0D0A63757272656E742E656E763D68656C6C6F20646174, '26bf543aa60771654fdec964543cc8cb', '2020-05-12 17:21:43', '2020-05-12 17:21:43', null, 'localhost', '', '96509aea-8458-4c41-86c2-1506a3d43a45', null, null, null, 'properties', null);
+INSERT INTO `config_info` VALUES ('5', 'gateway.properties', 'DEFAULT_GROUP', 0x737072696E672E6170706C69636174696F6E2E6E616D653D676174657761790A7365727665722E706F72743D393030300A0A737072696E672E636C6F75642E73656E74696E656C2E7472616E73706F72742E64617368626F6172643D6C6F63616C686F73743A383939390A737072696E672E636C6F75642E73656E74696E656C2E7472616E73706F72742E706F72743D393031300A737072696E672E636C6F75642E73656E74696E656C2E7472616E73706F72742E636C69656E742D69703D6C6F63616C686F73740A0A236E61636F73207365727665720A737072696E672E636C6F75642E6E61636F732E646973636F766572792E7365727665722D616464723D6C6F63616C686F73743A383834380A236C6F6767696E672E6C6576656C2E636F6D2E616C69626162612E6E61636F732E636C69656E742E6E616D696E673D696E666F0A23676174657761790A23737072696E672E636C6F75642E676174657761792E646973636F766572792E6C6F6361746F722E656E61626C65643D747275650A23737072696E672E636C6F75642E676174657761792E646973636F766572792E6C6F6361746F722E6C6F776572436173655365727669636549643D747275650A6C6F6767696E672E6C6576656C2E6F72672E737072696E676672616D65776F726B2E636C6F75642E676174657761793D74726163650A6C6F6767696E672E6C6576656C2E6F72672E737072696E676672616D65776F726B2E687474702E7365727665722E72656163746976653D64656275670A6C6F6767696E672E6C6576656C2E6F72672E737072696E676672616D65776F726B2E7765622E72656163746976653D64656275670A6C6F6767696E672E6C6576656C2E72656163746F722E6970632E6E657474793D64656275670A6D616E6167656D656E742E656E64706F696E74732E7765622E6578706F737572652E696E636C7564653D2A0A23726F757465206A736F6E0A6E61636F732E6461746149643D726F757465732E6A736F6E0A6E61636F732E67726F75703D44454641554C545F47524F5550, '096cbee5a628811e4284fbb321ff1a04', '2020-05-13 14:00:23', '2021-03-14 17:37:31', null, '192.168.31.141', '', '4e7b1917-ca58-41e4-8d2a-d8539274883b', 'null', 'null', 'null', 'properties', 0x6E756C6C);
+INSERT INTO `config_info` VALUES ('6', 'routes.json', 'DEFAULT_GROUP', 0x5B0A202020207B0A2020202020202020226964223A226E61636F7361222C0A20202020202020202270726564696361746573223A5B0A2020202020202020202020207B0A20202020202020202020202020202020226E616D65223A2250617468222C0A202020202020202020202020202020202261726773223A7B0A2020202020202020202020202020202020202020227061747465726E223A222F6E61636F73612F2A2A220A202020202020202020202020202020207D0A2020202020202020202020207D0A20202020202020205D2C0A20202020202020202266696C74657273223A205B0A2020202020207B0A2020202020202020226E616D65223A20225265777269746550617468222C0A20202020202020202261726773223A207B0A2020202020202020202022726567657870223A20222F6E61636F73612F283F3C72656D61696E696E673E2E2A29222C0A20202020202020202020227265706C6163656D656E74223A20222F247B72656D61696E696E677D220A20202020202020207D0A2020202020207D0A202020205D2C0A202020202020202022757269223A226C623A2F2F6E61636F7361222C0A2020202020202020226F72646572223A300A202020207D0A5D, '09e661ae898b9de36be8aac7afd45c8a', '2020-05-13 14:49:43', '2021-03-14 18:13:24', null, '192.168.31.141', '', '4e7b1917-ca58-41e4-8d2a-d8539274883b', 'null', 'null', 'null', 'json', 0x6E756C6C);
+INSERT INTO `config_info` VALUES ('22', 'sentinel-service', 'DEFAULT_GROUP', 0x5B0A202020207B0A2020202020202020227265736F75726365223A20222F68656C6C6F576F726C6432222C0A2020202020202020226C696D6974417070223A202264656661756C74222C0A2020202020202020226772616465223A20312C0A202020202020202022636F756E74223A20322C0A2020202020202020227374726174656779223A20302C0A202020202020202022636F6E74726F6C4265686176696F72223A20302C0A202020202020202022636C75737465724D6F6465223A2066616C73650A202020207D0A5D, 'c4ede1c0f8e517362466dc0a93f9e85d', '2021-03-16 17:55:55', '2021-03-16 19:25:58', null, '192.168.31.141', '', '4e7b1917-ca58-41e4-8d2a-d8539274883b', '', '', '', 'json', '');
+INSERT INTO `config_info` VALUES ('23', 'nacosa', 'DEFAULT_GROUP', 0x63757272656E743A0A2020656E763A2074686973206973207561740A6D616E6167656D656E743A0A2020656E64706F696E74733A0A202020207765623A0A2020202020206578706F737572653A0A20202020202020206578636C7564653A20272A270A6C6F6767696E673A0A20206C6576656C3A0A20202020636F6D3A0A202020202020616C69626162613A0A20202020202020206E61636F733A0A20202020202020202020636C69656E743A0A2020202020202020202020206E616D696E673A20696E666F0A23207365727665723A0A23202020706F72743A20393130300A737072696E673A0A2020636C6F75643A0A202020206E61636F733A0A202020202020646973636F766572793A0A20202020202020207365727665722D616464723A206C6F63616C686F73743A383834380A20202020232073656E74696E656C3A0A20202020232020207472616E73706F72743A0A2020202023202020202064617368626F6172643A206C6F63616C686F73743A383939390A20202020232020202020706F72743A2038373139200A2020202023202020202023E9BB98E8AEA438373139EFBC8CE58187E5A682E8A2ABE58DA0E794A8E4BA86E4BC9AE887AAE58AA8E4BB8E38373139E5BC80E5A78BE4BE9DE6ACA12B31E689ABE68F8FE38082E79BB4E887B3E689BEE588B0E69CAAE8A2ABE58DA0E794A8E79A84E7ABAFE58FA30A202020202320202064617461736F757263653A0A202020202320202020206473313A0A2020202023202020202020206E61636F733A0A20202020232020202020202020207365727665722D616464723A206C6F63616C686F73743A383834380A20202020232020202020202020206461746149643A2073656E74696E656C2D736572766963650A202020202320202020202020202067726F757049643A2044454641554C545F47524F55500A2020202023202020202020202020646174612D747970653A206A736F6E0A202020202320202020202020202072756C652D747970653A20666C6F770A20202020232020202020202020206E616D6573706163653A2034653762313931372D636135382D343165342D386432612D6438353339323734383833620A202020202020202020202020, '9476df4b119593eb9d00b3d6bfffd7f2', '2021-03-16 17:58:49', '2021-03-17 17:39:11', null, '192.168.31.141', '', '4e7b1917-ca58-41e4-8d2a-d8539274883b', '', '', '', 'yaml', '');
+INSERT INTO `config_info` VALUES ('27', 'nacosa-other', 'DEFAULT_GROUP', 0x616161613A2074686973206973207561742C2C2C2C, '1a3544b3171ba22f9f4599567d5c39fb', '2021-03-16 18:03:11', '2021-03-16 18:10:30', null, '192.168.31.141', '', '4e7b1917-ca58-41e4-8d2a-d8539274883b', '', '', '', 'yaml', '');
+INSERT INTO `config_info` VALUES ('60', 'nacosa-cluster-client-config', 'DEFAULT_GROUP', 0x7B227265717565737454696D656F7574223A333030307D, '64343b2f65dde5af33583f52099a3d7d', '2021-03-17 17:25:01', '2021-03-17 17:26:37', null, '192.168.31.141', '', '4e7b1917-ca58-41e4-8d2a-d8539274883b', '', '', '', 'json', '');
+INSERT INTO `config_info` VALUES ('61', 'nacosa-flow-rules', 'DEFAULT_GROUP', 0x5B0A202020207B0A2020202020202020227265736F7572636522203A20222F68656C6C6F576F726C6433222C20202020200A202020202020202022677261646522203A20312C202020202020202020202020202020202020202020202020200A202020202020202022636F756E7422203A20312C2020202020202020202020202020202020202020202020200A202020202020202022636C75737465724D6F646522203A2020747275652C2020202020202020202020202020200A202020202020202022636C7573746572436F6E66696722203A207B0A20202020202020202020202022666C6F77496422203A203131312C2020202020202020202020202020202020200A202020202020202020202020227468726573686F6C645479706522203A20312C2020202020202020202020200A2020202020202020202020202266616C6C6261636B546F4C6F63616C5768656E4661696C22203A2074727565200A20202020202020207D0A202020207D0A5D, 'f9f56e8db3a30509364eae705f168922', '2021-03-17 17:26:22', '2021-03-17 18:00:53', null, '192.168.31.141', '', '4e7b1917-ca58-41e4-8d2a-d8539274883b', '', '', '', 'json', '');
+INSERT INTO `config_info` VALUES ('64', 'nacosa-cluster-map', 'DEFAULT_GROUP', 0x5B7B0A0922636C69656E74536574223A205B223139322E3136382E33312E3134314039333031222C20223139322E3136382E33312E3134314039323031225D2C0A09226970223A20223139322E3136382E33312E313431222C2F2F207365727665722069700A09226D616368696E654964223A20223139322E3136382E33312E3134314039313031222C0A0922706F7274223A2039303039200A7D5D, '4e22b71ef227d03c75446d4f05969ce8', '2021-03-17 17:34:33', '2021-03-17 17:47:12', null, '192.168.31.141', '', '4e7b1917-ca58-41e4-8d2a-d8539274883b', '', '', '', 'json', '');
 
 -- ----------------------------
 -- Table structure for config_info_aggr
 -- ----------------------------
 DROP TABLE IF EXISTS `config_info_aggr`;
-CREATE TABLE `config_info_aggr`  (
+CREATE TABLE `config_info_aggr` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
-  `data_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'data_id',
-  `group_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'group_id',
-  `datum_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'datum_id',
-  `content` longtext CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '内容',
-  `gmt_modified` datetime(0) NOT NULL COMMENT '修改时间',
-  `app_name` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
-  `tenant_id` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT '' COMMENT '租户字段',
+  `data_id` varchar(255) COLLATE utf8_bin NOT NULL COMMENT 'data_id',
+  `group_id` varchar(255) COLLATE utf8_bin NOT NULL COMMENT 'group_id',
+  `datum_id` varchar(255) COLLATE utf8_bin NOT NULL COMMENT 'datum_id',
+  `content` longtext COLLATE utf8_bin NOT NULL COMMENT '内容',
+  `gmt_modified` datetime NOT NULL COMMENT '修改时间',
+  `app_name` varchar(128) COLLATE utf8_bin DEFAULT NULL,
+  `tenant_id` varchar(128) COLLATE utf8_bin DEFAULT '' COMMENT '租户字段',
   PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE INDEX `uk_configinfoaggr_datagrouptenantdatum`(`data_id`, `group_id`, `tenant_id`, `datum_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '增加租户字段' ROW_FORMAT = Dynamic;
+  UNIQUE KEY `uk_configinfoaggr_datagrouptenantdatum` (`data_id`,`group_id`,`tenant_id`,`datum_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin ROW_FORMAT=DYNAMIC COMMENT='增加租户字段';
+
+-- ----------------------------
+-- Records of config_info_aggr
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for config_info_beta
 -- ----------------------------
 DROP TABLE IF EXISTS `config_info_beta`;
-CREATE TABLE `config_info_beta`  (
+CREATE TABLE `config_info_beta` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
-  `data_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'data_id',
-  `group_id` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'group_id',
-  `app_name` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT 'app_name',
-  `content` longtext CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'content',
-  `beta_ips` varchar(1024) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT 'betaIps',
-  `md5` varchar(32) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT 'md5',
-  `gmt_create` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `gmt_modified` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
-  `src_user` text CHARACTER SET utf8 COLLATE utf8_bin COMMENT 'source user',
-  `src_ip` varchar(20) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT 'source ip',
-  `tenant_id` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT '' COMMENT '租户字段',
+  `data_id` varchar(255) COLLATE utf8_bin NOT NULL COMMENT 'data_id',
+  `group_id` varchar(128) COLLATE utf8_bin NOT NULL COMMENT 'group_id',
+  `app_name` varchar(128) COLLATE utf8_bin DEFAULT NULL COMMENT 'app_name',
+  `content` longtext COLLATE utf8_bin NOT NULL COMMENT 'content',
+  `beta_ips` varchar(1024) COLLATE utf8_bin DEFAULT NULL COMMENT 'betaIps',
+  `md5` varchar(32) COLLATE utf8_bin DEFAULT NULL COMMENT 'md5',
+  `gmt_create` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `gmt_modified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
+  `src_user` text COLLATE utf8_bin COMMENT 'source user',
+  `src_ip` varchar(20) COLLATE utf8_bin DEFAULT NULL COMMENT 'source ip',
+  `tenant_id` varchar(128) COLLATE utf8_bin DEFAULT '' COMMENT '租户字段',
   PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE INDEX `uk_configinfobeta_datagrouptenant`(`data_id`, `group_id`, `tenant_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = 'config_info_beta' ROW_FORMAT = Dynamic;
+  UNIQUE KEY `uk_configinfobeta_datagrouptenant` (`data_id`,`group_id`,`tenant_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin ROW_FORMAT=DYNAMIC COMMENT='config_info_beta';
+
+-- ----------------------------
+-- Records of config_info_beta
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for config_info_tag
 -- ----------------------------
 DROP TABLE IF EXISTS `config_info_tag`;
-CREATE TABLE `config_info_tag`  (
+CREATE TABLE `config_info_tag` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
-  `data_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'data_id',
-  `group_id` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'group_id',
-  `tenant_id` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT '' COMMENT 'tenant_id',
-  `tag_id` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'tag_id',
-  `app_name` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT 'app_name',
-  `content` longtext CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'content',
-  `md5` varchar(32) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT 'md5',
-  `gmt_create` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `gmt_modified` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
-  `src_user` text CHARACTER SET utf8 COLLATE utf8_bin COMMENT 'source user',
-  `src_ip` varchar(20) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT 'source ip',
+  `data_id` varchar(255) COLLATE utf8_bin NOT NULL COMMENT 'data_id',
+  `group_id` varchar(128) COLLATE utf8_bin NOT NULL COMMENT 'group_id',
+  `tenant_id` varchar(128) COLLATE utf8_bin DEFAULT '' COMMENT 'tenant_id',
+  `tag_id` varchar(128) COLLATE utf8_bin NOT NULL COMMENT 'tag_id',
+  `app_name` varchar(128) COLLATE utf8_bin DEFAULT NULL COMMENT 'app_name',
+  `content` longtext COLLATE utf8_bin NOT NULL COMMENT 'content',
+  `md5` varchar(32) COLLATE utf8_bin DEFAULT NULL COMMENT 'md5',
+  `gmt_create` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `gmt_modified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
+  `src_user` text COLLATE utf8_bin COMMENT 'source user',
+  `src_ip` varchar(20) COLLATE utf8_bin DEFAULT NULL COMMENT 'source ip',
   PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE INDEX `uk_configinfotag_datagrouptenanttag`(`data_id`, `group_id`, `tenant_id`, `tag_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = 'config_info_tag' ROW_FORMAT = Dynamic;
+  UNIQUE KEY `uk_configinfotag_datagrouptenanttag` (`data_id`,`group_id`,`tenant_id`,`tag_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin ROW_FORMAT=DYNAMIC COMMENT='config_info_tag';
+
+-- ----------------------------
+-- Records of config_info_tag
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for config_tags_relation
 -- ----------------------------
 DROP TABLE IF EXISTS `config_tags_relation`;
-CREATE TABLE `config_tags_relation`  (
+CREATE TABLE `config_tags_relation` (
   `id` bigint(20) NOT NULL COMMENT 'id',
-  `tag_name` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'tag_name',
-  `tag_type` varchar(64) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT 'tag_type',
-  `data_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'data_id',
-  `group_id` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'group_id',
-  `tenant_id` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT '' COMMENT 'tenant_id',
+  `tag_name` varchar(128) COLLATE utf8_bin NOT NULL COMMENT 'tag_name',
+  `tag_type` varchar(64) COLLATE utf8_bin DEFAULT NULL COMMENT 'tag_type',
+  `data_id` varchar(255) COLLATE utf8_bin NOT NULL COMMENT 'data_id',
+  `group_id` varchar(128) COLLATE utf8_bin NOT NULL COMMENT 'group_id',
+  `tenant_id` varchar(128) COLLATE utf8_bin DEFAULT '' COMMENT 'tenant_id',
   `nid` bigint(20) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`nid`) USING BTREE,
-  UNIQUE INDEX `uk_configtagrelation_configidtag`(`id`, `tag_name`, `tag_type`) USING BTREE,
-  INDEX `idx_tenant_id`(`tenant_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = 'config_tag_relation' ROW_FORMAT = Dynamic;
+  UNIQUE KEY `uk_configtagrelation_configidtag` (`id`,`tag_name`,`tag_type`) USING BTREE,
+  KEY `idx_tenant_id` (`tenant_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin ROW_FORMAT=DYNAMIC COMMENT='config_tag_relation';
+
+-- ----------------------------
+-- Records of config_tags_relation
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for group_capacity
 -- ----------------------------
 DROP TABLE IF EXISTS `group_capacity`;
-CREATE TABLE `group_capacity`  (
-  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键ID',
-  `group_id` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT 'Group ID，空字符表示整个集群',
-  `quota` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '配额，0表示使用默认值',
-  `usage` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '使用量',
-  `max_size` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '单个配置大小上限，单位为字节，0表示使用默认值',
-  `max_aggr_count` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '聚合子配置最大个数，，0表示使用默认值',
-  `max_aggr_size` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '单个聚合数据的子配置大小上限，单位为字节，0表示使用默认值',
-  `max_history_count` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '最大变更历史数量',
-  `gmt_create` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `gmt_modified` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
+CREATE TABLE `group_capacity` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `group_id` varchar(128) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT 'Group ID，空字符表示整个集群',
+  `quota` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '配额，0表示使用默认值',
+  `usage` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '使用量',
+  `max_size` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '单个配置大小上限，单位为字节，0表示使用默认值',
+  `max_aggr_count` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '聚合子配置最大个数，，0表示使用默认值',
+  `max_aggr_size` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '单个聚合数据的子配置大小上限，单位为字节，0表示使用默认值',
+  `max_history_count` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '最大变更历史数量',
+  `gmt_create` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `gmt_modified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE INDEX `uk_group_id`(`group_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '集群、各Group容量信息表' ROW_FORMAT = Dynamic;
+  UNIQUE KEY `uk_group_id` (`group_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin ROW_FORMAT=DYNAMIC COMMENT='集群、各Group容量信息表';
+
+-- ----------------------------
+-- Records of group_capacity
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for his_config_info
 -- ----------------------------
 DROP TABLE IF EXISTS `his_config_info`;
-CREATE TABLE `his_config_info`  (
-  `id` bigint(64) UNSIGNED NOT NULL,
-  `nid` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `data_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
-  `group_id` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
-  `app_name` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT 'app_name',
-  `content` longtext CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
-  `md5` varchar(32) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
-  `gmt_create` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `gmt_modified` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `src_user` text CHARACTER SET utf8 COLLATE utf8_bin,
-  `src_ip` varchar(20) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
-  `op_type` char(10) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
-  `tenant_id` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT '' COMMENT '租户字段',
+CREATE TABLE `his_config_info` (
+  `id` bigint(64) unsigned NOT NULL,
+  `nid` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `data_id` varchar(255) COLLATE utf8_bin NOT NULL,
+  `group_id` varchar(128) COLLATE utf8_bin NOT NULL,
+  `app_name` varchar(128) COLLATE utf8_bin DEFAULT NULL COMMENT 'app_name',
+  `content` longtext COLLATE utf8_bin NOT NULL,
+  `md5` varchar(32) COLLATE utf8_bin DEFAULT NULL,
+  `gmt_create` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `gmt_modified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `src_user` text COLLATE utf8_bin,
+  `src_ip` varchar(20) COLLATE utf8_bin DEFAULT NULL,
+  `op_type` char(10) COLLATE utf8_bin DEFAULT NULL,
+  `tenant_id` varchar(128) COLLATE utf8_bin DEFAULT '' COMMENT '租户字段',
   PRIMARY KEY (`nid`) USING BTREE,
-  INDEX `idx_gmt_create`(`gmt_create`) USING BTREE,
-  INDEX `idx_gmt_modified`(`gmt_modified`) USING BTREE,
-  INDEX `idx_did`(`data_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 25 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '多租户改造' ROW_FORMAT = Dynamic;
+  KEY `idx_gmt_create` (`gmt_create`) USING BTREE,
+  KEY `idx_gmt_modified` (`gmt_modified`) USING BTREE,
+  KEY `idx_did` (`data_id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=88 DEFAULT CHARSET=utf8 COLLATE=utf8_bin ROW_FORMAT=DYNAMIC COMMENT='多租户改造';
 
 -- ----------------------------
 -- Records of his_config_info
 -- ----------------------------
-INSERT INTO `his_config_info` VALUES (0, 15, 'sentinel-demo.properties', 'DEFAULT_GROUP', '', 'server.port=12000\r\nspring.application.name=sentinel-demo\r\nspring.cloud.sentinel.transport.dashboard=localhost:8999\r\nspring.cloud.sentinel.transport.port=12001', '4e3d99abb8b524117ce7319ac45e96d4', '2020-06-15 15:28:06', '2020-06-15 15:28:07', NULL, '0:0:0:0:0:0:0:1', 'I', '4e7b1917-ca58-41e4-8d2a-d8539274883b');
-INSERT INTO `his_config_info` VALUES (7, 16, 'sentinel-demo.properties', 'DEFAULT_GROUP', '', 'server.port=12000\r\nspring.application.name=sentinel-demo\r\nspring.cloud.sentinel.transport.dashboard=localhost:8999\r\nspring.cloud.sentinel.transport.port=12001', '4e3d99abb8b524117ce7319ac45e96d4', '2020-06-15 16:12:02', '2020-06-15 16:12:02', NULL, '0:0:0:0:0:0:0:1', 'U', '4e7b1917-ca58-41e4-8d2a-d8539274883b');
-INSERT INTO `his_config_info` VALUES (7, 17, 'sentinel-demo.properties', 'DEFAULT_GROUP', '', 'server.port=12000\r\nspring.application.name=sentinel-demo\r\n\r\n# sentinel dashboard\r\nspring.cloud.sentinel.transport.dashboard=localhost:8999\r\nspring.cloud.sentinel.transport.port=12001\r\n\r\n# nacos server\r\nspring.cloud.nacos.discovery.server-addr=127.0.0.1:8848', 'd8bf0aa70a5905c575b30b615d8a6b9f', '2020-06-15 16:34:07', '2020-06-15 16:34:08', NULL, '0:0:0:0:0:0:0:1', 'U', '4e7b1917-ca58-41e4-8d2a-d8539274883b');
-INSERT INTO `his_config_info` VALUES (7, 18, 'sentinel-demo.properties', 'DEFAULT_GROUP', '', '#server.port=12000\r\n#spring.application.name=sentinel-demo\r\n\r\n# sentinel dashboard\r\n#spring.cloud.sentinel.transport.dashboard=localhost:8999\r\n#spring.cloud.sentinel.transport.port=12001\r\n\r\n# nacos server\r\nspring.cloud.nacos.discovery.server-addr=127.0.0.1:8848', '3746d11bacba877b56f52e390432533b', '2020-06-17 09:25:46', '2020-06-17 09:25:46', NULL, '0:0:0:0:0:0:0:1', 'U', '4e7b1917-ca58-41e4-8d2a-d8539274883b');
-INSERT INTO `his_config_info` VALUES (5, 19, 'gateway.properties', 'DEFAULT_GROUP', '', 'spring.application.name=gateway\r\nserver.port=9000\r\n#nacos server\r\nspring.cloud.nacos.discovery.server-addr=127.0.0.1:8848\r\n#logging.level.com.alibaba.nacos.client.naming=info\r\n#gateway\r\nspring.cloud.gateway.discovery.locator.enabled=true\r\nspring.cloud.gateway.discovery.locator.lowerCaseServiceId=true\r\nlogging.level.org.springframework.cloud.gateway=trace\r\nlogging.level.org.springframework.http.server.reactive=debug\r\nlogging.level.org.springframework.web.reactive=debug\r\nlogging.level.reactor.ipc.netty=debug\r\nmanagement.endpoints.web.exposure.include=*\r\n#route json\r\nnacos.dataId=routes.json\r\nnacos.group=DEFAULT_GROUP', 'a50b01b1795ea9443ba8cb1ac44c7696', '2020-06-19 17:06:40', '2020-06-19 17:06:41', NULL, '0:0:0:0:0:0:0:1', 'U', '4e7b1917-ca58-41e4-8d2a-d8539274883b');
-INSERT INTO `his_config_info` VALUES (2, 20, 'nacosa.properties', 'DEFAULT_GROUP', '', 'server.port=9100\r\nspring.cloud.nacos.discovery.server-addr=127.0.0.1:8848\r\nlogging.level.com.alibaba.nacos.client.naming=info\r\ncurrent.env=this is uat', 'f4f4639ad2490b1690a9c4fc7df42c74', '2020-06-19 17:10:27', '2020-06-19 17:10:27', NULL, '0:0:0:0:0:0:0:1', 'U', '4e7b1917-ca58-41e4-8d2a-d8539274883b');
-INSERT INTO `his_config_info` VALUES (2, 21, 'nacosa.properties', 'DEFAULT_GROUP', '', 'server.port=9100\r\nspring.cloud.nacos.discovery.server-addr=127.0.0.1:8848\r\nlogging.level.com.alibaba.nacos.client.naming=info\r\ncurrent.env=this is uat\r\n\r\n\r\nspring.cloud.sentinel.transport.dashboard=localhost:8999\r\nspring.cloud.sentinel.transport.port=8719', '7ea334d6744f0b7116495598147a57c5', '2020-06-23 09:41:33', '2020-06-23 09:41:33', NULL, '0:0:0:0:0:0:0:1', 'U', '4e7b1917-ca58-41e4-8d2a-d8539274883b');
-INSERT INTO `his_config_info` VALUES (5, 22, 'gateway.properties', 'DEFAULT_GROUP', '', 'spring.application.name=gateway\r\nserver.port=9000\r\n\r\nspring.cloud.sentinel.transport.dashboard=localhost:8999\r\nspring.cloud.sentinel.transport.port=9010\r\n\r\n#nacos server\r\nspring.cloud.nacos.discovery.server-addr=127.0.0.1:8848\r\n#logging.level.com.alibaba.nacos.client.naming=info\r\n#gateway\r\nspring.cloud.gateway.discovery.locator.enabled=true\r\nspring.cloud.gateway.discovery.locator.lowerCaseServiceId=true\r\nlogging.level.org.springframework.cloud.gateway=trace\r\nlogging.level.org.springframework.http.server.reactive=debug\r\nlogging.level.org.springframework.web.reactive=debug\r\nlogging.level.reactor.ipc.netty=debug\r\nmanagement.endpoints.web.exposure.include=*\r\n#route json\r\nnacos.dataId=routes.json\r\nnacos.group=DEFAULT_GROUP', 'a7091941f2fa1b4cfc5208f5475c15d8', '2020-06-23 10:15:36', '2020-06-23 10:15:37', NULL, '0:0:0:0:0:0:0:1', 'U', '4e7b1917-ca58-41e4-8d2a-d8539274883b');
-INSERT INTO `his_config_info` VALUES (2, 23, 'nacosa.properties', 'DEFAULT_GROUP', '', 'server.port=9100\r\nspring.cloud.nacos.discovery.server-addr=127.0.0.1:8848\r\nlogging.level.com.alibaba.nacos.client.naming=info\r\ncurrent.env=this is uat\r\n\r\n\r\nspring.cloud.sentinel.transport.dashboard=localhost:8999\r\nspring.cloud.sentinel.transport.port=8719\r\nspring.cloud.sentinel.transport.client-ip=localhost', 'e188b2809ea772e960dba7ff0e906b52', '2020-06-23 10:15:54', '2020-06-23 10:15:54', NULL, '0:0:0:0:0:0:0:1', 'U', '4e7b1917-ca58-41e4-8d2a-d8539274883b');
-INSERT INTO `his_config_info` VALUES (5, 24, 'gateway.properties', 'DEFAULT_GROUP', '', 'spring.application.name=gateway\r\nserver.port=9000\r\n\r\nspring.cloud.sentinel.transport.dashboard=localhost:8999\r\nspring.cloud.sentinel.transport.port=9010\r\n\r\n#nacos server\r\nspring.cloud.nacos.discovery.server-addr=localhost:8848\r\n#logging.level.com.alibaba.nacos.client.naming=info\r\n#gateway\r\nspring.cloud.gateway.discovery.locator.enabled=true\r\nspring.cloud.gateway.discovery.locator.lowerCaseServiceId=true\r\nlogging.level.org.springframework.cloud.gateway=trace\r\nlogging.level.org.springframework.http.server.reactive=debug\r\nlogging.level.org.springframework.web.reactive=debug\r\nlogging.level.reactor.ipc.netty=debug\r\nmanagement.endpoints.web.exposure.include=*\r\n#route json\r\nnacos.dataId=routes.json\r\nnacos.group=DEFAULT_GROUP', '684577d4fc3968d96869ebd26902d82d', '2020-06-23 10:16:22', '2020-06-23 10:16:23', NULL, '0:0:0:0:0:0:0:1', 'U', '4e7b1917-ca58-41e4-8d2a-d8539274883b');
+INSERT INTO `his_config_info` VALUES ('5', '25', 'gateway.properties', 'DEFAULT_GROUP', '', 0x737072696E672E6170706C69636174696F6E2E6E616D653D676174657761790D0A7365727665722E706F72743D393030300D0A0D0A737072696E672E636C6F75642E73656E74696E656C2E7472616E73706F72742E64617368626F6172643D6C6F63616C686F73743A383939390D0A737072696E672E636C6F75642E73656E74696E656C2E7472616E73706F72742E706F72743D393031300D0A737072696E672E636C6F75642E73656E74696E656C2E7472616E73706F72742E636C69656E742D69703D6C6F63616C686F73740D0A0D0A236E61636F73207365727665720D0A737072696E672E636C6F75642E6E61636F732E646973636F766572792E7365727665722D616464723D6C6F63616C686F73743A383834380D0A236C6F6767696E672E6C6576656C2E636F6D2E616C69626162612E6E61636F732E636C69656E742E6E616D696E673D696E666F0D0A23676174657761790D0A737072696E672E636C6F75642E676174657761792E646973636F766572792E6C6F6361746F722E656E61626C65643D747275650D0A737072696E672E636C6F75642E676174657761792E646973636F766572792E6C6F6361746F722E6C6F776572436173655365727669636549643D747275650D0A6C6F6767696E672E6C6576656C2E6F72672E737072696E676672616D65776F726B2E636C6F75642E676174657761793D74726163650D0A6C6F6767696E672E6C6576656C2E6F72672E737072696E676672616D65776F726B2E687474702E7365727665722E72656163746976653D64656275670D0A6C6F6767696E672E6C6576656C2E6F72672E737072696E676672616D65776F726B2E7765622E72656163746976653D64656275670D0A6C6F6767696E672E6C6576656C2E72656163746F722E6970632E6E657474793D64656275670D0A6D616E6167656D656E742E656E64706F696E74732E7765622E6578706F737572652E696E636C7564653D2A0D0A23726F757465206A736F6E0D0A6E61636F732E6461746149643D726F757465732E6A736F6E0D0A6E61636F732E67726F75703D44454641554C545F47524F5550, 'd6ee94365836e11962c37786c2aec1f4', '2021-03-15 01:37:31', '2021-03-14 17:37:31', null, '192.168.31.141', 'U', '4e7b1917-ca58-41e4-8d2a-d8539274883b');
+INSERT INTO `his_config_info` VALUES ('6', '26', 'routes.json', 'DEFAULT_GROUP', '', 0x5B0D0A202020207B0D0A2020202020202020226964223A226E61636F7361222C0D0A20202020202020202270726564696361746573223A5B0D0A2020202020202020202020207B0D0A20202020202020202020202020202020226E616D65223A2250617468222C0D0A202020202020202020202020202020202261726773223A7B0D0A2020202020202020202020202020202020202020227061747465726E223A222F6E61636F73612F2A2A220D0A202020202020202020202020202020207D0D0A2020202020202020202020207D0D0A20202020202020205D2C0D0A20202020202020202266696C74657273223A5B0D0A2020202020202020202020207B0D0A20202020202020202020202020202020226E616D65223A225265777269746550617468222C0D0A202020202020202020202020202020202261726773223A7B0D0A202020202020202020202020202020202020202022726567657870223A222F6E61636F73612F283F3C72656D61696E696E673E2E2A29222C0D0A2020202020202020202020202020202020202020227265706C6163656D656E74223A222F247B72656D61696E696E677D220D0A202020202020202020202020202020207D0D0A2020202020202020202020207D0D0A20202020202020205D2C0D0A202020202020202022757269223A226C623A2F2F6E61636F7361222C0D0A2020202020202020226F72646572223A300D0A202020207D0D0A5D, '635eca7f79b39821371302a77a691e50', '2021-03-15 01:57:27', '2021-03-14 17:57:28', null, '192.168.31.141', 'U', '4e7b1917-ca58-41e4-8d2a-d8539274883b');
+INSERT INTO `his_config_info` VALUES ('6', '27', 'routes.json', 'DEFAULT_GROUP', '', 0x5B0A202020207B0A2020202020202020226964223A226E61636F7361222C0A20202020202020202270726564696361746573223A5B0A2020202020202020202020207B0A20202020202020202020202020202020226E616D65223A2250617468222C0A202020202020202020202020202020202261726773223A7B0A2020202020202020202020202020202020202020227061747465726E223A222F6E61636F73612F2A2A220A202020202020202020202020202020207D0A2020202020202020202020207D0A20202020202020205D2C0A20202020202020200A202020202020202022757269223A226C623A2F2F6E61636F7361222C0A2020202020202020226F72646572223A300A202020207D0A5D, '052589ed9d8aa17199dcb5bbcec4a426', '2021-03-15 02:04:40', '2021-03-14 18:04:41', null, '192.168.31.141', 'U', '4e7b1917-ca58-41e4-8d2a-d8539274883b');
+INSERT INTO `his_config_info` VALUES ('6', '28', 'routes.json', 'DEFAULT_GROUP', '', 0x5B0A202020200A5D, '80bdfc1df74aa6b62c4c347085929d68', '2021-03-15 02:05:01', '2021-03-14 18:05:02', null, '192.168.31.141', 'U', '4e7b1917-ca58-41e4-8d2a-d8539274883b');
+INSERT INTO `his_config_info` VALUES ('6', '29', 'routes.json', 'DEFAULT_GROUP', '', 0x5B0A202020207B0A2020202020202020226964223A226E61636F7361222C0A20202020202020202270726564696361746573223A5B0A2020202020202020202020207B0A20202020202020202020202020202020226E616D65223A2250617468222C0A202020202020202020202020202020202261726773223A7B0A2020202020202020202020202020202020202020227061747465726E223A222F6E61636F73612F2A2A220A202020202020202020202020202020207D0A2020202020202020202020207D0A20202020202020205D2C0A20202020202020200A202020202020202022757269223A226C623A2F2F6E61636F7361222C0A2020202020202020226F72646572223A300A202020207D0A5D, '052589ed9d8aa17199dcb5bbcec4a426', '2021-03-15 02:12:03', '2021-03-14 18:12:04', null, '192.168.31.141', 'U', '4e7b1917-ca58-41e4-8d2a-d8539274883b');
+INSERT INTO `his_config_info` VALUES ('6', '30', 'routes.json', 'DEFAULT_GROUP', '', 0x5B0A202020207B0A2020202020202020226964223A226E61636F7361222C0A20202020202020202270726564696361746573223A5B0A2020202020202020202020207B0A20202020202020202020202020202020226E616D65223A2250617468222C0A202020202020202020202020202020202261726773223A7B0A2020202020202020202020202020202020202020227061747465726E223A222F6E61636F73612F2A2A220A202020202020202020202020202020207D0A2020202020202020202020207D0A20202020202020205D2C0A20202020202020200A202020202020202022757269223A226C623A2F2F6E61636F7361222C0A2020202020202020226F72646572223A300A202020207D0A5D, '052589ed9d8aa17199dcb5bbcec4a426', '2021-03-15 02:13:23', '2021-03-14 18:13:24', null, '192.168.31.141', 'U', '4e7b1917-ca58-41e4-8d2a-d8539274883b');
+INSERT INTO `his_config_info` VALUES ('7', '31', 'sentinel-demo.properties', 'DEFAULT_GROUP', '', 0x7365727665722E706F72743D31323030300D0A737072696E672E6170706C69636174696F6E2E6E616D653D73656E74696E656C2D64656D6F0D0A0D0A232073656E74696E656C2064617368626F6172640D0A737072696E672E636C6F75642E73656E74696E656C2E7472616E73706F72742E64617368626F6172643D6C6F63616C686F73743A383939390D0A737072696E672E636C6F75642E73656E74696E656C2E7472616E73706F72742E706F72743D31323030310D0A0D0A23206E61636F73207365727665720D0A737072696E672E636C6F75642E6E61636F732E646973636F766572792E7365727665722D616464723D3132372E302E302E313A38383438, 'd8bf0aa70a5905c575b30b615d8a6b9f', '2021-03-17 00:44:49', '2021-03-16 16:44:50', null, '192.168.31.141', 'D', '4e7b1917-ca58-41e4-8d2a-d8539274883b');
+INSERT INTO `his_config_info` VALUES ('2', '32', 'nacosa.properties', 'DEFAULT_GROUP', '', 0x7365727665722E706F72743D393130300D0A737072696E672E636C6F75642E6E61636F732E646973636F766572792E7365727665722D616464723D6C6F63616C686F73743A383834380D0A6C6F6767696E672E6C6576656C2E636F6D2E616C69626162612E6E61636F732E636C69656E742E6E616D696E673D696E666F0D0A63757272656E742E656E763D74686973206973207561740D0A0D0A0D0A737072696E672E636C6F75642E73656E74696E656C2E7472616E73706F72742E64617368626F6172643D6C6F63616C686F73743A383939390D0A737072696E672E636C6F75642E73656E74696E656C2E7472616E73706F72742E706F72743D393131310D0A737072696E672E636C6F75642E73656E74696E656C2E7472616E73706F72742E636C69656E742D69703D6C6F63616C686F7374, 'b111f817fa0eae8ea1e68fec117b570d', '2021-03-17 00:47:35', '2021-03-16 16:47:35', null, '192.168.31.141', 'U', '4e7b1917-ca58-41e4-8d2a-d8539274883b');
+INSERT INTO `his_config_info` VALUES ('2', '33', 'nacosa.properties', 'DEFAULT_GROUP', '', 0x7365727665722E706F72743D393130300A737072696E672E636C6F75642E6E61636F732E646973636F766572792E7365727665722D616464723D6C6F63616C686F73743A383834380A6C6F6767696E672E6C6576656C2E636F6D2E616C69626162612E6E61636F732E636C69656E742E6E616D696E673D696E666F0A63757272656E742E656E763D74686973206973207561740A0A0A737072696E672E636C6F75642E73656E74696E656C2E7472616E73706F72742E64617368626F6172643D6C6F63616C686F73743A383939390A737072696E672E636C6F75642E73656E74696E656C2E7472616E73706F72742E706F72743D393131310A737072696E672E636C6F75642E73656E74696E656C2E7472616E73706F72742E636C69656E742D69703D6C6F63616C686F7374, '70fa2ffe8a1703c7eaa2b5c82aaf1361', '2021-03-17 01:49:47', '2021-03-16 17:49:48', null, '192.168.31.141', 'U', '4e7b1917-ca58-41e4-8d2a-d8539274883b');
+INSERT INTO `his_config_info` VALUES ('2', '34', 'nacosa.properties', 'DEFAULT_GROUP', '', 0x63757272656E743A0A2020656E763A2074686973206973207561740A6C6F6767696E673A0A20206C6576656C3A0A20202020636F6D3A0A202020202020616C69626162613A0A20202020202020206E61636F733A0A20202020202020202020636C69656E743A0A2020202020202020202020206E616D696E673A20696E666F0A7365727665723A0A2020706F72743A20393130300A737072696E673A0A2020636C6F75643A0A202020206E61636F733A0A202020202020646973636F766572793A0A20202020202020207365727665722D616464723A206C6F63616C686F73743A383834380A2020202073656E74696E656C3A0A2020202020207472616E73706F72743A0A2020202020202020636C69656E742D69703A206C6F63616C686F73740A202020202020202064617368626F6172643A206C6F63616C686F73743A383939390A2020202020202020706F72743A2039313131, '7c95db2cdb039a161c7f36846fc4cde7', '2021-03-17 01:53:12', '2021-03-16 17:53:13', null, '192.168.31.141', 'U', '4e7b1917-ca58-41e4-8d2a-d8539274883b');
+INSERT INTO `his_config_info` VALUES ('2', '35', 'nacosa.properties', 'DEFAULT_GROUP', '', 0x63757272656E743A0A2020656E763A2074686973206973207561740A6C6F6767696E673A0A20206C6576656C3A0A20202020636F6D3A0A202020202020616C69626162613A0A20202020202020206E61636F733A0A20202020202020202020636C69656E743A0A2020202020202020202020206E616D696E673A20696E666F0A7365727665723A0A2020706F72743A20393130300A737072696E673A0A2020636C6F75643A0A202020206E61636F733A0A202020202020646973636F766572793A0A20202020202020207365727665722D616464723A206C6F63616C686F73743A383834380A2020202073656E74696E656C3A0A2020202020207472616E73706F72743A0A2020202020202020636C69656E742D69703A206C6F63616C686F73740A202020202020202064617368626F6172643A206C6F63616C686F73743A383939390A2020202020202020706F72743A2038373139200A202020202020202023E9BB98E8AEA438373139EFBC8CE58187E5A682E8A2ABE58DA0E794A8E4BA86E4BC9AE887AAE58AA8E4BB8E38373139E5BC80E5A78BE4BE9DE6ACA12B31E689ABE68F8FE38082E79BB4E887B3E689BEE588B0E69CAAE8A2ABE58DA0E794A8E79A84E7ABAFE58FA3, '7d2815bc2c297c7b84cc4cc141e48eee', '2021-03-17 01:54:58', '2021-03-16 17:54:59', null, '192.168.31.141', 'U', '4e7b1917-ca58-41e4-8d2a-d8539274883b');
+INSERT INTO `his_config_info` VALUES ('0', '36', 'sentinel-service', 'DEFAULT_GROUP', '', 0x5B0D0A202020207B0D0A2020202020202020227265736F75726365223A20222F7465737441222C0D0A2020202020202020226C696D6974417070223A202264656661756C74222C0D0A2020202020202020226772616465223A20312C0D0A202020202020202022636F756E74223A20312C0D0A2020202020202020227374726174656779223A20302C0D0A202020202020202022636F6E74726F6C4265686176696F72223A20302C0D0A202020202020202022636C75737465724D6F6465223A2066616C73650D0A202020207D0D0A5D, '11a278d39c9ab1863e087d270b83d0d7', '2021-03-17 01:55:55', '2021-03-16 17:55:55', null, '192.168.31.141', 'I', '4e7b1917-ca58-41e4-8d2a-d8539274883b');
+INSERT INTO `his_config_info` VALUES ('0', '37', 'nacosa', 'DEFAULT_GROUP', '', 0x31, 'c4ca4238a0b923820dcc509a6f75849b', '2021-03-17 01:58:49', '2021-03-16 17:58:49', null, '192.168.31.141', 'I', '4e7b1917-ca58-41e4-8d2a-d8539274883b');
+INSERT INTO `his_config_info` VALUES ('23', '38', 'nacosa', 'DEFAULT_GROUP', '', 0x31, 'c4ca4238a0b923820dcc509a6f75849b', '2021-03-17 01:59:06', '2021-03-16 17:59:07', null, '192.168.31.141', 'U', '4e7b1917-ca58-41e4-8d2a-d8539274883b');
+INSERT INTO `his_config_info` VALUES ('0', '39', 'nacosa.yml', 'DEFAULT_GROUP', '', 0x31, 'c4ca4238a0b923820dcc509a6f75849b', '2021-03-17 02:00:50', '2021-03-16 18:00:50', null, '192.168.31.141', 'I', '4e7b1917-ca58-41e4-8d2a-d8539274883b');
+INSERT INTO `his_config_info` VALUES ('25', '40', 'nacosa.yml', 'DEFAULT_GROUP', '', 0x31, 'c4ca4238a0b923820dcc509a6f75849b', '2021-03-17 02:01:06', '2021-03-16 18:01:07', null, '192.168.31.141', 'U', '4e7b1917-ca58-41e4-8d2a-d8539274883b');
+INSERT INTO `his_config_info` VALUES ('25', '41', 'nacosa.yml', 'DEFAULT_GROUP', '', 0x63757272656E743A0A2020656E763A2074686973206973207561740A6D616E6167656D656E743A0A2020656E64706F696E74733A0A202020207765623A0A2020202020206578706F737572653A0A20202020202020206578636C7564653A20272A270A6C6F6767696E673A0A20206C6576656C3A0A20202020636F6D3A0A202020202020616C69626162613A0A20202020202020206E61636F733A0A20202020202020202020636C69656E743A0A2020202020202020202020206E616D696E673A20696E666F0A7365727665723A0A2020706F72743A20393130300A737072696E673A0A2020636C6F75643A0A202020206E61636F733A0A202020202020646973636F766572793A0A20202020202020207365727665722D616464723A206C6F63616C686F73743A383834380A2020202073656E74696E656C3A0A2020202020207472616E73706F72743A0A2020202020202020636C69656E742D69703A206C6F63616C686F73740A202020202020202064617368626F6172643A206C6F63616C686F73743A383939390A2020202020202020706F72743A2038373139200A202020202020202023E9BB98E8AEA438373139EFBC8CE58187E5A682E8A2ABE58DA0E794A8E4BA86E4BC9AE887AAE58AA8E4BB8E38373139E5BC80E5A78BE4BE9DE6ACA12B31E689ABE68F8FE38082E79BB4E887B3E689BEE588B0E69CAAE8A2ABE58DA0E794A8E79A84E7ABAFE58FA30A20202020202064617461736F757263653A0A20202020202020206473313A0A202020202020202020206E61636F733A0A2020202020202020202020207365727665722D616464723A206C6F63616C686F73743A383834380A2020202020202020202020206461746149643A2073656E74696E656C2D736572766963650A20202020202020202020202067726F757049643A2044454641554C545F47524F55500A202020202020202020202020646174612D747970653A206A736F6E0A20202020202020202020202072756C652D747970653A20666C6F77, 'f9dd6e058427f73bf22626d4f0c68231', '2021-03-17 02:02:01', '2021-03-16 18:02:01', null, '192.168.31.141', 'D', '4e7b1917-ca58-41e4-8d2a-d8539274883b');
+INSERT INTO `his_config_info` VALUES ('2', '42', 'nacosa.properties', 'DEFAULT_GROUP', '', 0x63757272656E743A0A2020656E763A2074686973206973207561740A6D616E6167656D656E743A0A2020656E64706F696E74733A0A202020207765623A0A2020202020206578706F737572653A0A20202020202020206578636C7564653A20272A270A6C6F6767696E673A0A20206C6576656C3A0A20202020636F6D3A0A202020202020616C69626162613A0A20202020202020206E61636F733A0A20202020202020202020636C69656E743A0A2020202020202020202020206E616D696E673A20696E666F0A7365727665723A0A2020706F72743A20393130300A737072696E673A0A2020636C6F75643A0A202020206E61636F733A0A202020202020646973636F766572793A0A20202020202020207365727665722D616464723A206C6F63616C686F73743A383834380A2020202073656E74696E656C3A0A2020202020207472616E73706F72743A0A2020202020202020636C69656E742D69703A206C6F63616C686F73740A202020202020202064617368626F6172643A206C6F63616C686F73743A383939390A2020202020202020706F72743A2038373139200A202020202020202023E9BB98E8AEA438373139EFBC8CE58187E5A682E8A2ABE58DA0E794A8E4BA86E4BC9AE887AAE58AA8E4BB8E38373139E5BC80E5A78BE4BE9DE6ACA12B31E689ABE68F8FE38082E79BB4E887B3E689BEE588B0E69CAAE8A2ABE58DA0E794A8E79A84E7ABAFE58FA30A20202020202064617461736F757263653A0A20202020202020206473313A0A202020202020202020206E61636F733A0A2020202020202020202020207365727665722D616464723A206C6F63616C686F73743A383834380A2020202020202020202020206461746149643A2073656E74696E656C2D736572766963650A20202020202020202020202067726F757049643A2044454641554C545F47524F55500A202020202020202020202020646174612D747970653A206A736F6E0A20202020202020202020202072756C652D747970653A20666C6F77, 'f9dd6e058427f73bf22626d4f0c68231', '2021-03-17 02:02:07', '2021-03-16 18:02:08', null, '192.168.31.141', 'D', '4e7b1917-ca58-41e4-8d2a-d8539274883b');
+INSERT INTO `his_config_info` VALUES ('0', '43', 'nacosa-other', 'DEFAULT_GROUP', '', 0x61613A2031, '06c3c8fc9983b4d37618476394d0c4e0', '2021-03-17 02:03:11', '2021-03-16 18:03:11', null, '192.168.31.141', 'I', '4e7b1917-ca58-41e4-8d2a-d8539274883b');
+INSERT INTO `his_config_info` VALUES ('27', '44', 'nacosa-other', 'DEFAULT_GROUP', '', 0x61613A2031, '06c3c8fc9983b4d37618476394d0c4e0', '2021-03-17 02:03:56', '2021-03-16 18:03:56', null, '192.168.31.141', 'U', '4e7b1917-ca58-41e4-8d2a-d8539274883b');
+INSERT INTO `his_config_info` VALUES ('27', '45', 'nacosa-other', 'DEFAULT_GROUP', '', 0x63757272656E743A0A2020656E763A207468697320697320756174, '5ca29e4409f526cc240a5eed97a8c7e1', '2021-03-17 02:06:03', '2021-03-16 18:06:04', null, '192.168.31.141', 'U', '4e7b1917-ca58-41e4-8d2a-d8539274883b');
+INSERT INTO `his_config_info` VALUES ('27', '46', 'nacosa-other', 'DEFAULT_GROUP', '', 0x63757272656E743A0A2020656E763A2074686973206973207561742C2C2C2C, 'd287612c4340bd48c2798f2bc906c7b1', '2021-03-17 02:06:16', '2021-03-16 18:06:17', null, '192.168.31.141', 'U', '4e7b1917-ca58-41e4-8d2a-d8539274883b');
+INSERT INTO `his_config_info` VALUES ('27', '47', 'nacosa-other', 'DEFAULT_GROUP', '', 0x63757272656E743A0A20206161613A2074686973206973207561742C2C2C2C, '4257265e7ecdb64e819be1f7e65f5bd2', '2021-03-17 02:07:53', '2021-03-16 18:07:54', null, '192.168.31.141', 'U', '4e7b1917-ca58-41e4-8d2a-d8539274883b');
+INSERT INTO `his_config_info` VALUES ('27', '48', 'nacosa-other', 'DEFAULT_GROUP', '', 0x616161613A2074686973206973207561742C2C2C2C, '1a3544b3171ba22f9f4599567d5c39fb', '2021-03-17 02:09:48', '2021-03-16 18:09:48', null, '192.168.31.141', 'U', '4e7b1917-ca58-41e4-8d2a-d8539274883b');
+INSERT INTO `his_config_info` VALUES ('27', '49', 'nacosa-other', 'DEFAULT_GROUP', '', 0x616161613A2074686973206973207561742C2C2C2C3131313131313131, 'e5facbbe31fb2ce6fa23aea4cb555bda', '2021-03-17 02:10:29', '2021-03-16 18:10:30', null, '192.168.31.141', 'U', '4e7b1917-ca58-41e4-8d2a-d8539274883b');
+INSERT INTO `his_config_info` VALUES ('22', '50', 'sentinel-service', 'DEFAULT_GROUP', '', 0x5B0D0A202020207B0D0A2020202020202020227265736F75726365223A20222F7465737441222C0D0A2020202020202020226C696D6974417070223A202264656661756C74222C0D0A2020202020202020226772616465223A20312C0D0A202020202020202022636F756E74223A20312C0D0A2020202020202020227374726174656779223A20302C0D0A202020202020202022636F6E74726F6C4265686176696F72223A20302C0D0A202020202020202022636C75737465724D6F6465223A2066616C73650D0A202020207D0D0A5D, '11a278d39c9ab1863e087d270b83d0d7', '2021-03-17 02:11:59', '2021-03-16 18:11:59', null, '192.168.31.141', 'U', '4e7b1917-ca58-41e4-8d2a-d8539274883b');
+INSERT INTO `his_config_info` VALUES ('22', '51', 'sentinel-service', 'DEFAULT_GROUP', '', 0x5B0A202020207B0A2020202020202020227265736F75726365223A20222F68656C6C6F576F726C6432222C0A2020202020202020226C696D6974417070223A202264656661756C74222C0A2020202020202020226772616465223A20312C0A202020202020202022636F756E74223A20312C0A2020202020202020227374726174656779223A20302C0A202020202020202022636F6E74726F6C4265686176696F72223A20302C0A202020202020202022636C75737465724D6F6465223A2066616C73650A202020207D0A5D, 'd7f93b545465545f00eb7363befb0372', '2021-03-17 02:12:37', '2021-03-16 18:12:38', null, '192.168.31.141', 'U', '4e7b1917-ca58-41e4-8d2a-d8539274883b');
+INSERT INTO `his_config_info` VALUES ('22', '52', 'sentinel-service', 'DEFAULT_GROUP', '', 0x5B0A202020207B0A2020202020202020227265736F75726365223A20222F68656C6C6F576F726C6432222C0A2020202020202020226C696D6974417070223A202264656661756C74222C0A2020202020202020226772616465223A20312C0A202020202020202022636F756E74223A2031303030303030303030302C0A2020202020202020227374726174656779223A20302C0A202020202020202022636F6E74726F6C4265686176696F72223A20302C0A202020202020202022636C75737465724D6F6465223A2066616C73650A202020207D0A5D, 'def8e8fcae412f9f1a5af415317c2482', '2021-03-17 02:13:34', '2021-03-16 18:13:34', null, '192.168.31.141', 'U', '4e7b1917-ca58-41e4-8d2a-d8539274883b');
+INSERT INTO `his_config_info` VALUES ('23', '53', 'nacosa', 'DEFAULT_GROUP', '', 0x63757272656E743A0A2020656E763A2074686973206973207561740A6D616E6167656D656E743A0A2020656E64706F696E74733A0A202020207765623A0A2020202020206578706F737572653A0A20202020202020206578636C7564653A20272A270A6C6F6767696E673A0A20206C6576656C3A0A20202020636F6D3A0A202020202020616C69626162613A0A20202020202020206E61636F733A0A20202020202020202020636C69656E743A0A2020202020202020202020206E616D696E673A20696E666F0A7365727665723A0A2020706F72743A20393130300A737072696E673A0A2020636C6F75643A0A202020206E61636F733A0A202020202020646973636F766572793A0A20202020202020207365727665722D616464723A206C6F63616C686F73743A383834380A2020202073656E74696E656C3A0A2020202020207472616E73706F72743A0A2020202020202020636C69656E742D69703A206C6F63616C686F73740A202020202020202064617368626F6172643A206C6F63616C686F73743A383939390A2020202020202020706F72743A2038373139200A202020202020202023E9BB98E8AEA438373139EFBC8CE58187E5A682E8A2ABE58DA0E794A8E4BA86E4BC9AE887AAE58AA8E4BB8E38373139E5BC80E5A78BE4BE9DE6ACA12B31E689ABE68F8FE38082E79BB4E887B3E689BEE588B0E69CAAE8A2ABE58DA0E794A8E79A84E7ABAFE58FA30A20202020202064617461736F757263653A0A20202020202020206473313A0A202020202020202020206E61636F733A0A2020202020202020202020207365727665722D616464723A206C6F63616C686F73743A383834380A2020202020202020202020206461746149643A2073656E74696E656C2D736572766963650A20202020202020202020202067726F757049643A2044454641554C545F47524F55500A202020202020202020202020646174612D747970653A206A736F6E0A20202020202020202020202072756C652D747970653A20666C6F77, 'f9dd6e058427f73bf22626d4f0c68231', '2021-03-17 02:27:18', '2021-03-16 18:27:18', null, '192.168.31.141', 'U', '4e7b1917-ca58-41e4-8d2a-d8539274883b');
+INSERT INTO `his_config_info` VALUES ('23', '54', 'nacosa', 'DEFAULT_GROUP', '', 0x63757272656E743A0A2020656E763A2074686973206973207561740A6D616E6167656D656E743A0A2020656E64706F696E74733A0A202020207765623A0A2020202020206578706F737572653A0A20202020202020206578636C7564653A20272A270A6C6F6767696E673A0A20206C6576656C3A0A20202020636F6D3A0A202020202020616C69626162613A0A20202020202020206E61636F733A0A20202020202020202020636C69656E743A0A2020202020202020202020206E616D696E673A20696E666F0A7365727665723A0A2020706F72743A20393130300A737072696E673A0A2020636C6F75643A0A202020206E61636F733A0A202020202020646973636F766572793A0A20202020202020207365727665722D616464723A206C6F63616C686F73743A383834380A2020202073656E74696E656C3A0A2020202020207472616E73706F72743A0A2020202020202020636C69656E742D69703A206C6F63616C686F73740A202020202020202064617368626F6172643A206C6F63616C686F73743A383939390A2020202020202020706F72743A2038373139200A202020202020202023E9BB98E8AEA438373139EFBC8CE58187E5A682E8A2ABE58DA0E794A8E4BA86E4BC9AE887AAE58AA8E4BB8E38373139E5BC80E5A78BE4BE9DE6ACA12B31E689ABE68F8FE38082E79BB4E887B3E689BEE588B0E69CAAE8A2ABE58DA0E794A8E79A84E7ABAFE58FA30A20202020202064617461736F757263653A0A20202020202020206473313A0A202020202020202020206E61636F733A0A2020202020202020202020207365727665722D616464723A203139322E3136382E33312E3134313A383834380A2020202020202020202020206461746149643A2073656E74696E656C2D736572766963650A20202020202020202020202067726F757049643A2044454641554C545F47524F55500A202020202020202020202020646174612D747970653A206A736F6E0A20202020202020202020202072756C652D747970653A20666C6F77, 'bb16baabcc096c434e62ac3fc4bee2c9', '2021-03-17 02:32:24', '2021-03-16 18:32:25', null, '192.168.31.141', 'U', '4e7b1917-ca58-41e4-8d2a-d8539274883b');
+INSERT INTO `his_config_info` VALUES ('23', '55', 'nacosa', 'DEFAULT_GROUP', '', 0x63757272656E743A0A2020656E763A2074686973206973207561740A6D616E6167656D656E743A0A2020656E64706F696E74733A0A202020207765623A0A2020202020206578706F737572653A0A20202020202020206578636C7564653A20272A270A6C6F6767696E673A0A20206C6576656C3A0A20202020636F6D3A0A202020202020616C69626162613A0A20202020202020206E61636F733A0A20202020202020202020636C69656E743A0A2020202020202020202020206E616D696E673A20696E666F0A7365727665723A0A2020706F72743A20393130300A737072696E673A0A2020636C6F75643A0A202020206E61636F733A0A202020202020646973636F766572793A0A20202020202020207365727665722D616464723A206C6F63616C686F73743A383834380A2020202073656E74696E656C3A0A2020202020207472616E73706F72743A0A2020202020202020636C69656E742D69703A206C6F63616C686F73740A202020202020202064617368626F6172643A206C6F63616C686F73743A383939390A2020202020202020706F72743A2038373139200A202020202020202023E9BB98E8AEA438373139EFBC8CE58187E5A682E8A2ABE58DA0E794A8E4BA86E4BC9AE887AAE58AA8E4BB8E38373139E5BC80E5A78BE4BE9DE6ACA12B31E689ABE68F8FE38082E79BB4E887B3E689BEE588B0E69CAAE8A2ABE58DA0E794A8E79A84E7ABAFE58FA30A20202020202064617461736F757263653A0A20202020202020206473313A0A202020202020202020206E61636F733A0A2020202020202020202020207365727665722D616464723A203139322E3136382E33312E3134313A383834380A2020202020202020202020206461746149643A2073656E74696E656C2D736572766963650A20202020202020202020202067726F757049643A2044454641554C545F47524F55500A202020202020202020202020646174612D747970653A206A736F6E0A20202020202020202020202072756C652D747970653A20666C6F770A2020202020202020202020206E616D657370616365EFBC9A31, '45b8f86acf73199f04d6025224f009d4', '2021-03-17 02:33:52', '2021-03-16 18:33:53', null, '192.168.31.141', 'U', '4e7b1917-ca58-41e4-8d2a-d8539274883b');
+INSERT INTO `his_config_info` VALUES ('23', '56', 'nacosa', 'DEFAULT_GROUP', '', 0x63757272656E743A0A2020656E763A2074686973206973207561740A6D616E6167656D656E743A0A2020656E64706F696E74733A0A202020207765623A0A2020202020206578706F737572653A0A20202020202020206578636C7564653A20272A270A6C6F6767696E673A0A20206C6576656C3A0A20202020636F6D3A0A202020202020616C69626162613A0A20202020202020206E61636F733A0A20202020202020202020636C69656E743A0A2020202020202020202020206E616D696E673A20696E666F0A7365727665723A0A2020706F72743A20393130300A737072696E673A0A2020636C6F75643A0A202020206E61636F733A0A202020202020646973636F766572793A0A20202020202020207365727665722D616464723A206C6F63616C686F73743A383834380A2020202073656E74696E656C3A0A2020202020207472616E73706F72743A0A2020202020202020636C69656E742D69703A206C6F63616C686F73740A202020202020202064617368626F6172643A206C6F63616C686F73743A383939390A2020202020202020706F72743A2038373139200A202020202020202023E9BB98E8AEA438373139EFBC8CE58187E5A682E8A2ABE58DA0E794A8E4BA86E4BC9AE887AAE58AA8E4BB8E38373139E5BC80E5A78BE4BE9DE6ACA12B31E689ABE68F8FE38082E79BB4E887B3E689BEE588B0E69CAAE8A2ABE58DA0E794A8E79A84E7ABAFE58FA30A20202020202064617461736F757263653A0A20202020202020206473313A0A202020202020202020206E61636F733A0A2020202020202020202020207365727665722D616464723A203139322E3136382E33312E3134313A383834380A2020202020202020202020206461746149643A2073656E74696E656C2D736572766963650A20202020202020202020202067726F757049643A2044454641554C545F47524F55500A202020202020202020202020, 'e0b871ab8c8e11db035b1617d2ef3523', '2021-03-17 02:34:22', '2021-03-16 18:34:23', null, '192.168.31.141', 'U', '4e7b1917-ca58-41e4-8d2a-d8539274883b');
+INSERT INTO `his_config_info` VALUES ('22', '57', 'sentinel-service', 'DEFAULT_GROUP', '', 0x5B0A202020207B0A2020202020202020227265736F75726365223A20222F68656C6C6F576F726C6432222C0A2020202020202020226C696D6974417070223A202264656661756C74222C0A2020202020202020226772616465223A20312C0A202020202020202022636F756E74223A20312C0A2020202020202020227374726174656779223A20302C0A202020202020202022636F6E74726F6C4265686176696F72223A20302C0A202020202020202022636C75737465724D6F6465223A2066616C73650A202020207D0A5D, 'd7f93b545465545f00eb7363befb0372', '2021-03-17 02:34:54', '2021-03-16 18:34:55', null, '192.168.31.141', 'U', '4e7b1917-ca58-41e4-8d2a-d8539274883b');
+INSERT INTO `his_config_info` VALUES ('22', '58', 'sentinel-service', 'DEFAULT_GROUP', '', 0x5B0A202020207B0A2020202020202020227265736F75726365223A20222F68656C6C6F576F726C6432222C0A2020202020202020226C696D6974417070223A202264656661756C74222C0A2020202020202020226772616465223A20312C0A202020202020202022636F756E74223A20322C0A2020202020202020227374726174656779223A20302C0A202020202020202022636F6E74726F6C4265686176696F72223A20302C0A202020202020202022636C75737465724D6F6465223A2066616C73650A202020207D0A5D, 'c4ede1c0f8e517362466dc0a93f9e85d', '2021-03-17 03:00:46', '2021-03-16 19:00:46', null, '192.168.31.141', 'U', '4e7b1917-ca58-41e4-8d2a-d8539274883b');
+INSERT INTO `his_config_info` VALUES ('22', '59', 'sentinel-service', 'DEFAULT_GROUP', '', 0x5B0A202020207B0A2020202020202020227265736F75726365223A20222F68656C6C6F576F726C6432222C0A2020202020202020226C696D6974417070223A202264656661756C74222C0A2020202020202020226772616465223A20312C0A202020202020202022636F756E74223A20312C0A2020202020202020227374726174656779223A20302C0A202020202020202022636F6E74726F6C4265686176696F72223A20302C0A202020202020202022636C75737465724D6F6465223A2066616C73650A202020207D0A5D, 'd7f93b545465545f00eb7363befb0372', '2021-03-17 03:01:43', '2021-03-16 19:01:44', null, '192.168.31.141', 'U', '4e7b1917-ca58-41e4-8d2a-d8539274883b');
+INSERT INTO `his_config_info` VALUES ('22', '60', 'sentinel-service', 'DEFAULT_GROUP', '', 0x5B0A202020207B0A2020202020202020227265736F75726365223A20222F68656C6C6F576F726C6432222C0A2020202020202020226C696D6974417070223A202264656661756C74222C0A2020202020202020226772616465223A20312C0A202020202020202022636F756E74223A20312C0A2020202020202020227374726174656779223A20302C0A202020202020202022636F6E74726F6C4265686176696F72223A20302C0A202020202020202022636C75737465724D6F6465223A2066616C73650A202020207D0A5D, 'd7f93b545465545f00eb7363befb0372', '2021-03-17 03:01:57', '2021-03-16 19:01:57', null, '192.168.31.141', 'U', '4e7b1917-ca58-41e4-8d2a-d8539274883b');
+INSERT INTO `his_config_info` VALUES ('23', '61', 'nacosa', 'DEFAULT_GROUP', '', 0x63757272656E743A0A2020656E763A2074686973206973207561740A6D616E6167656D656E743A0A2020656E64706F696E74733A0A202020207765623A0A2020202020206578706F737572653A0A20202020202020206578636C7564653A20272A270A6C6F6767696E673A0A20206C6576656C3A0A20202020636F6D3A0A202020202020616C69626162613A0A20202020202020206E61636F733A0A20202020202020202020636C69656E743A0A2020202020202020202020206E616D696E673A20696E666F0A7365727665723A0A2020706F72743A20393130300A737072696E673A0A2020636C6F75643A0A202020206E61636F733A0A202020202020646973636F766572793A0A20202020202020207365727665722D616464723A206C6F63616C686F73743A383834380A2020202073656E74696E656C3A0A2020202020207472616E73706F72743A0A2020202020202020636C69656E742D69703A206C6F63616C686F73740A202020202020202064617368626F6172643A206C6F63616C686F73743A383939390A2020202020202020706F72743A2038373139200A202020202020202023E9BB98E8AEA438373139EFBC8CE58187E5A682E8A2ABE58DA0E794A8E4BA86E4BC9AE887AAE58AA8E4BB8E38373139E5BC80E5A78BE4BE9DE6ACA12B31E689ABE68F8FE38082E79BB4E887B3E689BEE588B0E69CAAE8A2ABE58DA0E794A8E79A84E7ABAFE58FA30A20202020202064617461736F757263653A0A20202020202020206473313A0A202020202020202020206E61636F733A0A2020202020202020202020207365727665722D616464723A206C6F63616C686F73743A383834380A2020202020202020202020206461746149643A2073656E74696E656C2D736572766963650A20202020202020202020202067726F757049643A2044454641554C545F47524F55500A202020202020202020202020, 'fe828d4eca3aa308407a64d1976bbb9e', '2021-03-17 03:04:26', '2021-03-16 19:04:27', null, '192.168.31.141', 'U', '4e7b1917-ca58-41e4-8d2a-d8539274883b');
+INSERT INTO `his_config_info` VALUES ('23', '62', 'nacosa', 'DEFAULT_GROUP', '', 0x63757272656E743A0A2020656E763A2074686973206973207561740A6D616E6167656D656E743A0A2020656E64706F696E74733A0A202020207765623A0A2020202020206578706F737572653A0A20202020202020206578636C7564653A20272A270A6C6F6767696E673A0A20206C6576656C3A0A20202020636F6D3A0A202020202020616C69626162613A0A20202020202020206E61636F733A0A20202020202020202020636C69656E743A0A2020202020202020202020206E616D696E673A20696E666F0A7365727665723A0A2020706F72743A20393130300A737072696E673A0A2020636C6F75643A0A202020206E61636F733A0A202020202020646973636F766572793A0A20202020202020207365727665722D616464723A206C6F63616C686F73743A383834380A2020202073656E74696E656C3A0A2020202020207472616E73706F72743A0A2020202020202020636C69656E742D69703A206C6F63616C686F73740A202020202020202064617368626F6172643A206C6F63616C686F73743A383939390A2020202020202020706F72743A2038373139200A202020202020202023E9BB98E8AEA438373139EFBC8CE58187E5A682E8A2ABE58DA0E794A8E4BA86E4BC9AE887AAE58AA8E4BB8E38373139E5BC80E5A78BE4BE9DE6ACA12B31E689ABE68F8FE38082E79BB4E887B3E689BEE588B0E69CAAE8A2ABE58DA0E794A8E79A84E7ABAFE58FA30A20202020202064617461736F757263653A0A20202020202020206473313A0A202020202020202020206E61636F733A0A2020202020202020202020207365727665722D616464723A206C6F63616C686F73743A383834380A2020202020202020202020206461746149643A2073656E74696E656C2D736572766963650A20202020202020202020202067726F757049643A2044454641554C545F47524F55500A202020202020202020202020646174612D747970653A206A736F6E0A20202020202020202020202072756C652D747970653A20666C6F770A202020202020202020202020, 'a8256af3b58f078f1911225952cd6b00', '2021-03-17 03:05:20', '2021-03-16 19:05:20', null, '192.168.31.141', 'U', '4e7b1917-ca58-41e4-8d2a-d8539274883b');
+INSERT INTO `his_config_info` VALUES ('23', '63', 'nacosa', 'DEFAULT_GROUP', '', 0x63757272656E743A0A2020656E763A2074686973206973207561740A6D616E6167656D656E743A0A2020656E64706F696E74733A0A202020207765623A0A2020202020206578706F737572653A0A20202020202020206578636C7564653A20272A270A6C6F6767696E673A0A20206C6576656C3A0A20202020636F6D3A0A202020202020616C69626162613A0A20202020202020206E61636F733A0A20202020202020202020636C69656E743A0A2020202020202020202020206E616D696E673A20696E666F0A7365727665723A0A2020706F72743A20393130300A737072696E673A0A2020636C6F75643A0A202020206E61636F733A0A202020202020646973636F766572793A0A20202020202020207365727665722D616464723A206C6F63616C686F73743A383834380A2020202073656E74696E656C3A0A2020202020207472616E73706F72743A0A2020202020202020636C69656E742D69703A206C6F63616C686F73740A202020202020202064617368626F6172643A206C6F63616C686F73743A383939390A2020202020202020706F72743A2038373139200A202020202020202023E9BB98E8AEA438373139EFBC8CE58187E5A682E8A2ABE58DA0E794A8E4BA86E4BC9AE887AAE58AA8E4BB8E38373139E5BC80E5A78BE4BE9DE6ACA12B31E689ABE68F8FE38082E79BB4E887B3E689BEE588B0E69CAAE8A2ABE58DA0E794A8E79A84E7ABAFE58FA30A2020202020202364617461736F757263653A0A2020202020202020236473313A0A20202020202020202023206E61636F733A0A202020202020202020202320207365727665722D616464723A206C6F63616C686F73743A383834380A202020202020202020202023206461746149643A2073656E74696E656C2D736572766963650A2020202020202020202020202367726F757049643A2044454641554C545F47524F55500A20202020202020202020202023646174612D747970653A206A736F6E0A2020202020202020202020202372756C652D747970653A20666C6F770A202020202020202020202020, 'd2fb9a49476339a6ee0b40c5e65cb427', '2021-03-17 03:07:23', '2021-03-16 19:07:23', null, '192.168.31.141', 'U', '4e7b1917-ca58-41e4-8d2a-d8539274883b');
+INSERT INTO `his_config_info` VALUES ('22', '64', 'sentinel-service', 'DEFAULT_GROUP', '', 0x5B0A202020207B0A2020202020202020227265736F75726365223A20222F68656C6C6F576F726C6432222C0A2020202020202020226C696D6974417070223A202264656661756C74222C0A2020202020202020226772616465223A20312C0A202020202020202022636F756E74223A20322C0A2020202020202020227374726174656779223A20302C0A202020202020202022636F6E74726F6C4265686176696F72223A20302C0A202020202020202022636C75737465724D6F6465223A2066616C73650A202020207D0A5D, 'c4ede1c0f8e517362466dc0a93f9e85d', '2021-03-17 03:09:21', '2021-03-16 19:09:22', null, '192.168.31.141', 'U', '4e7b1917-ca58-41e4-8d2a-d8539274883b');
+INSERT INTO `his_config_info` VALUES ('23', '65', 'nacosa', 'DEFAULT_GROUP', '', 0x63757272656E743A0A2020656E763A2074686973206973207561740A6D616E6167656D656E743A0A2020656E64706F696E74733A0A202020207765623A0A2020202020206578706F737572653A0A20202020202020206578636C7564653A20272A270A6C6F6767696E673A0A20206C6576656C3A0A20202020636F6D3A0A202020202020616C69626162613A0A20202020202020206E61636F733A0A20202020202020202020636C69656E743A0A2020202020202020202020206E616D696E673A20696E666F0A7365727665723A0A2020706F72743A20393130300A737072696E673A0A2020636C6F75643A0A202020206E61636F733A0A202020202020646973636F766572793A0A20202020202020207365727665722D616464723A206C6F63616C686F73743A383834380A2020202073656E74696E656C3A0A2020202020207472616E73706F72743A0A2020202020202020636C69656E742D69703A206C6F63616C686F73740A202020202020202064617368626F6172643A206C6F63616C686F73743A383939390A2020202020202020706F72743A2038373139200A202020202020202023E9BB98E8AEA438373139EFBC8CE58187E5A682E8A2ABE58DA0E794A8E4BA86E4BC9AE887AAE58AA8E4BB8E38373139E5BC80E5A78BE4BE9DE6ACA12B31E689ABE68F8FE38082E79BB4E887B3E689BEE588B0E69CAAE8A2ABE58DA0E794A8E79A84E7ABAFE58FA30A20202020202064617461736F757263653A0A20202020202020206473313A0A202020202020202020206E61636F733A0A2020202020202020202020207365727665722D616464723A206C6F63616C686F73743A383834380A2020202020202020202020206461746149643A2073656E74696E656C2D736572766963650A20202020202020202020202067726F757049643A2044454641554C545F47524F55500A202020202020202020202020, 'fe828d4eca3aa308407a64d1976bbb9e', '2021-03-17 03:10:04', '2021-03-16 19:10:05', null, '192.168.31.141', 'U', '4e7b1917-ca58-41e4-8d2a-d8539274883b');
+INSERT INTO `his_config_info` VALUES ('22', '66', 'sentinel-service', 'DEFAULT_GROUP', '', 0x5B0A202020207B0A2020202020202020227265736F75726365223A20222F68656C6C6F576F726C6432222C0A2020202020202020226C696D6974417070223A202264656661756C74222C0A2020202020202020226772616465223A20312C0A202020202020202022636F756E74223A20322C0A2020202020202020227374726174656779223A20302C0A202020202020202022636F6E74726F6C4265686176696F72223A20302C0A202020202020202022636C75737465724D6F6465223A2066616C73650A202020207D0A5D, 'c4ede1c0f8e517362466dc0a93f9e85d', '2021-03-17 03:11:20', '2021-03-16 19:11:20', null, '192.168.31.141', 'U', '4e7b1917-ca58-41e4-8d2a-d8539274883b');
+INSERT INTO `his_config_info` VALUES ('23', '67', 'nacosa', 'DEFAULT_GROUP', '', 0x63757272656E743A0A2020656E763A2074686973206973207561740A6D616E6167656D656E743A0A2020656E64706F696E74733A0A202020207765623A0A2020202020206578706F737572653A0A20202020202020206578636C7564653A20272A270A6C6F6767696E673A0A20206C6576656C3A0A20202020636F6D3A0A202020202020616C69626162613A0A20202020202020206E61636F733A0A20202020202020202020636C69656E743A0A2020202020202020202020206E616D696E673A20696E666F0A7365727665723A0A2020706F72743A20393130300A737072696E673A0A2020636C6F75643A0A202020206E61636F733A0A202020202020646973636F766572793A0A20202020202020207365727665722D616464723A206C6F63616C686F73743A383834380A2020202073656E74696E656C3A0A2020202020207472616E73706F72743A0A2020202020202020636C69656E742D69703A206C6F63616C686F73740A202020202020202064617368626F6172643A206C6F63616C686F73743A383939390A2020202020202020706F72743A2038373139200A202020202020202023E9BB98E8AEA438373139EFBC8CE58187E5A682E8A2ABE58DA0E794A8E4BA86E4BC9AE887AAE58AA8E4BB8E38373139E5BC80E5A78BE4BE9DE6ACA12B31E689ABE68F8FE38082E79BB4E887B3E689BEE588B0E69CAAE8A2ABE58DA0E794A8E79A84E7ABAFE58FA30A20202020202064617461736F757263653A0A20202020202020206473313A0A202020202020202020206E61636F733A0A2020202020202020202020207365727665722D616464723A206C6F63616C686F73743A383834380A2020202020202020202020206461746149643A2073656E74696E656C2D736572766963650A20202020202020202020202067726F757049643A2044454641554C545F47524F55500A202020202020202020202020646174612D747970653A206A736F6E0A20202020202020202020202072756C652D747970653A20666C6F770A202020202020202020202020, 'a8256af3b58f078f1911225952cd6b00', '2021-03-17 03:12:17', '2021-03-16 19:12:18', null, '192.168.31.141', 'U', '4e7b1917-ca58-41e4-8d2a-d8539274883b');
+INSERT INTO `his_config_info` VALUES ('22', '68', 'sentinel-service', 'DEFAULT_GROUP', '', 0x5B0A202020207B0A2020202020202020227265736F75726365223A20222F68656C6C6F576F726C6432222C0A2020202020202020226C696D6974417070223A202264656661756C74222C0A2020202020202020226772616465223A20312C0A202020202020202022636F756E74223A20312C0A2020202020202020227374726174656779223A20302C0A202020202020202022636F6E74726F6C4265686176696F72223A20302C0A202020202020202022636C75737465724D6F6465223A2066616C73650A202020207D0A5D, 'd7f93b545465545f00eb7363befb0372', '2021-03-17 03:12:56', '2021-03-16 19:12:56', null, '192.168.31.141', 'U', '4e7b1917-ca58-41e4-8d2a-d8539274883b');
+INSERT INTO `his_config_info` VALUES ('23', '69', 'nacosa', 'DEFAULT_GROUP', '', 0x63757272656E743A0A2020656E763A2074686973206973207561740A6D616E6167656D656E743A0A2020656E64706F696E74733A0A202020207765623A0A2020202020206578706F737572653A0A20202020202020206578636C7564653A20272A270A6C6F6767696E673A0A20206C6576656C3A0A20202020636F6D3A0A202020202020616C69626162613A0A20202020202020206E61636F733A0A20202020202020202020636C69656E743A0A2020202020202020202020206E616D696E673A20696E666F0A7365727665723A0A2020706F72743A20393130300A737072696E673A0A2020636C6F75643A0A202020206E61636F733A0A202020202020646973636F766572793A0A20202020202020207365727665722D616464723A206C6F63616C686F73743A383834380A2020202073656E74696E656C3A0A2020202020207472616E73706F72743A0A2020202020202020636C69656E742D69703A206C6F63616C686F73740A202020202020202064617368626F6172643A206C6F63616C686F73743A383939390A2020202020202020706F72743A2038373139200A202020202020202023E9BB98E8AEA438373139EFBC8CE58187E5A682E8A2ABE58DA0E794A8E4BA86E4BC9AE887AAE58AA8E4BB8E38373139E5BC80E5A78BE4BE9DE6ACA12B31E689ABE68F8FE38082E79BB4E887B3E689BEE588B0E69CAAE8A2ABE58DA0E794A8E79A84E7ABAFE58FA30A2020202020200A202020202020202020202020, 'c74d6693583836f01326c96c62accb77', '2021-03-17 03:18:30', '2021-03-16 19:18:30', null, '192.168.31.141', 'U', '4e7b1917-ca58-41e4-8d2a-d8539274883b');
+INSERT INTO `his_config_info` VALUES ('23', '70', 'nacosa', 'DEFAULT_GROUP', '', 0x63757272656E743A0A2020656E763A2074686973206973207561740A6D616E6167656D656E743A0A2020656E64706F696E74733A0A202020207765623A0A2020202020206578706F737572653A0A20202020202020206578636C7564653A20272A270A6C6F6767696E673A0A20206C6576656C3A0A20202020636F6D3A0A202020202020616C69626162613A0A20202020202020206E61636F733A0A20202020202020202020636C69656E743A0A2020202020202020202020206E616D696E673A20696E666F0A7365727665723A0A2020706F72743A20393130300A737072696E673A0A2020636C6F75643A0A202020206E61636F733A0A202020202020646973636F766572793A0A20202020202020207365727665722D616464723A206C6F63616C686F73743A383834380A2020202073656E74696E656C3A0A2020202020207472616E73706F72743A0A2020202020202020636C69656E742D69703A206C6F63616C686F73740A202020202020202064617368626F6172643A206C6F63616C686F73743A383939390A2020202020202020706F72743A2038373139200A202020202020202023E9BB98E8AEA438373139EFBC8CE58187E5A682E8A2ABE58DA0E794A8E4BA86E4BC9AE887AAE58AA8E4BB8E38373139E5BC80E5A78BE4BE9DE6ACA12B31E689ABE68F8FE38082E79BB4E887B3E689BEE588B0E69CAAE8A2ABE58DA0E794A8E79A84E7ABAFE58FA30A20202020202064617461736F757263653A0A20202020202020206473313A0A202020202020202020206E61636F733A0A2020202020202020202020207365727665722D616464723A206C6F63616C686F73743A383834380A2020202020202020202020206461746149643A2073656E74696E656C2D736572766963650A20202020202020202020202067726F757049643A2044454641554C545F47524F55500A202020202020202020202020646174612D747970653A206A736F6E0A20202020202020202020202072756C652D747970653A20666C6F770A202020202020202020202020, 'a8256af3b58f078f1911225952cd6b00', '2021-03-17 03:22:03', '2021-03-16 19:22:03', null, '192.168.31.141', 'U', '4e7b1917-ca58-41e4-8d2a-d8539274883b');
+INSERT INTO `his_config_info` VALUES ('22', '71', 'sentinel-service', 'DEFAULT_GROUP', '', 0x5B0A202020207B0A2020202020202020227265736F75726365223A20222F68656C6C6F576F726C6432222C0A2020202020202020226C696D6974417070223A202264656661756C74222C0A2020202020202020226772616465223A20312C0A202020202020202022636F756E74223A20322C0A2020202020202020227374726174656779223A20302C0A202020202020202022636F6E74726F6C4265686176696F72223A20302C0A202020202020202022636C75737465724D6F6465223A2066616C73650A202020207D0A5D, 'c4ede1c0f8e517362466dc0a93f9e85d', '2021-03-17 03:22:45', '2021-03-16 19:22:46', null, '192.168.31.141', 'U', '4e7b1917-ca58-41e4-8d2a-d8539274883b');
+INSERT INTO `his_config_info` VALUES ('22', '72', 'sentinel-service', 'DEFAULT_GROUP', '', 0x5B0A202020207B0A2020202020202020227265736F75726365223A20222F68656C6C6F576F726C6432222C0A2020202020202020226C696D6974417070223A202264656661756C74222C0A2020202020202020226772616465223A20312C0A202020202020202022636F756E74223A2032302C0A2020202020202020227374726174656779223A20302C0A202020202020202022636F6E74726F6C4265686176696F72223A20302C0A202020202020202022636C75737465724D6F6465223A2066616C73650A202020207D0A5D, 'fed94eb3dc4386e339801f9f104ea0f2', '2021-03-17 03:25:02', '2021-03-16 19:25:03', null, '192.168.31.141', 'U', '4e7b1917-ca58-41e4-8d2a-d8539274883b');
+INSERT INTO `his_config_info` VALUES ('22', '73', 'sentinel-service', 'DEFAULT_GROUP', '', 0x5B0A202020207B0A2020202020202020227265736F75726365223A20222F68656C6C6F576F726C6432222C0A2020202020202020226C696D6974417070223A202264656661756C74222C0A2020202020202020226772616465223A2031302C0A202020202020202022636F756E74223A20352C0A2020202020202020227374726174656779223A20302C0A202020202020202022636F6E74726F6C4265686176696F72223A20302C0A202020202020202022636C75737465724D6F6465223A2066616C73650A202020207D0A5D, '322a779b72ce8fce0bea66a9c762d09e', '2021-03-17 03:25:39', '2021-03-16 19:25:39', null, '192.168.31.141', 'U', '4e7b1917-ca58-41e4-8d2a-d8539274883b');
+INSERT INTO `his_config_info` VALUES ('22', '74', 'sentinel-service', 'DEFAULT_GROUP', '', 0x5B0A202020207B0A2020202020202020227265736F75726365223A20222F68656C6C6F576F726C6432222C0A2020202020202020226C696D6974417070223A202264656661756C74222C0A2020202020202020226772616465223A20312C0A202020202020202022636F756E74223A20312C0A2020202020202020227374726174656779223A20302C0A202020202020202022636F6E74726F6C4265686176696F72223A20302C0A202020202020202022636C75737465724D6F6465223A2066616C73650A202020207D0A5D, 'd7f93b545465545f00eb7363befb0372', '2021-03-17 03:25:58', '2021-03-16 19:25:58', null, '192.168.31.141', 'U', '4e7b1917-ca58-41e4-8d2a-d8539274883b');
+INSERT INTO `his_config_info` VALUES ('23', '75', 'nacosa', 'DEFAULT_GROUP', '', 0x63757272656E743A0A2020656E763A2074686973206973207561740A6D616E6167656D656E743A0A2020656E64706F696E74733A0A202020207765623A0A2020202020206578706F737572653A0A20202020202020206578636C7564653A20272A270A6C6F6767696E673A0A20206C6576656C3A0A20202020636F6D3A0A202020202020616C69626162613A0A20202020202020206E61636F733A0A20202020202020202020636C69656E743A0A2020202020202020202020206E616D696E673A20696E666F0A7365727665723A0A2020706F72743A20393130300A737072696E673A0A2020636C6F75643A0A202020206E61636F733A0A202020202020646973636F766572793A0A20202020202020207365727665722D616464723A206C6F63616C686F73743A383834380A2020202073656E74696E656C3A0A2020202020207472616E73706F72743A0A2020202020202020636C69656E742D69703A206C6F63616C686F73740A202020202020202064617368626F6172643A206C6F63616C686F73743A383939390A2020202020202020706F72743A2038373139200A202020202020202023E9BB98E8AEA438373139EFBC8CE58187E5A682E8A2ABE58DA0E794A8E4BA86E4BC9AE887AAE58AA8E4BB8E38373139E5BC80E5A78BE4BE9DE6ACA12B31E689ABE68F8FE38082E79BB4E887B3E689BEE588B0E69CAAE8A2ABE58DA0E794A8E79A84E7ABAFE58FA30A20202020202064617461736F757263653A0A20202020202020206473313A0A202020202020202020206E61636F733A0A2020202020202020202020207365727665722D616464723A206C6F63616C686F73743A383834380A2020202020202020202020206461746149643A2073656E74696E656C2D736572766963650A20202020202020202020202067726F757049643A2044454641554C545F47524F55500A202020202020202020202020646174612D747970653A206A736F6E0A20202020202020202020202072756C652D747970653A20666C6F770A2020202020202020202020206E616D6573706163653A2034653762313931372D636135382D343165342D386432612D6438353339323734383833620A202020202020202020202020, '5618f154201922ac3e44d38fbeceac89', '2021-03-18 01:21:42', '2021-03-17 17:21:43', null, '192.168.31.141', 'U', '4e7b1917-ca58-41e4-8d2a-d8539274883b');
+INSERT INTO `his_config_info` VALUES ('0', '76', 'nacosa-cluster-client-config', 'DEFAULT_GROUP', '', 0x0D0A5B0D0A202020207B0D0A2020202020202020227265736F7572636522203A202268656C6C6F576F726C6433222C20202020200D0A202020202020202022677261646522203A20312C202020202020202020202020202020202020202020202020200D0A202020202020202022636F756E7422203A2031302C2020202020202020202020202020202020202020202020200D0A202020202020202022636C75737465724D6F646522203A2020747275652C2020202020202020202020202020200D0A202020202020202022636C7573746572436F6E66696722203A207B0D0A20202020202020202020202022666C6F77496422203A203131312C2020202020202020202020202020202020200D0A202020202020202020202020227468726573686F6C645479706522203A20312C2020202020202020202020200D0A2020202020202020202020202266616C6C6261636B546F4C6F63616C5768656E4661696C22203A2074727565200D0A20202020202020207D0D0A202020207D0D0A5D, 'fd0ba78e3996cfc2cbb9449dc62bf113', '2021-03-18 01:25:00', '2021-03-17 17:25:01', null, '192.168.31.141', 'I', '4e7b1917-ca58-41e4-8d2a-d8539274883b');
+INSERT INTO `his_config_info` VALUES ('0', '77', 'nacosa-flow-rules', 'DEFAULT_GROUP', '', 0x7B227265717565737454696D656F7574223A333030307D, '64343b2f65dde5af33583f52099a3d7d', '2021-03-18 01:26:22', '2021-03-17 17:26:22', null, '192.168.31.141', 'I', '4e7b1917-ca58-41e4-8d2a-d8539274883b');
+INSERT INTO `his_config_info` VALUES ('60', '78', 'nacosa-cluster-client-config', 'DEFAULT_GROUP', '', 0x0D0A5B0D0A202020207B0D0A2020202020202020227265736F7572636522203A202268656C6C6F576F726C6433222C20202020200D0A202020202020202022677261646522203A20312C202020202020202020202020202020202020202020202020200D0A202020202020202022636F756E7422203A2031302C2020202020202020202020202020202020202020202020200D0A202020202020202022636C75737465724D6F646522203A2020747275652C2020202020202020202020202020200D0A202020202020202022636C7573746572436F6E66696722203A207B0D0A20202020202020202020202022666C6F77496422203A203131312C2020202020202020202020202020202020200D0A202020202020202020202020227468726573686F6C645479706522203A20312C2020202020202020202020200D0A2020202020202020202020202266616C6C6261636B546F4C6F63616C5768656E4661696C22203A2074727565200D0A20202020202020207D0D0A202020207D0D0A5D, 'fd0ba78e3996cfc2cbb9449dc62bf113', '2021-03-18 01:26:37', '2021-03-17 17:26:37', null, '192.168.31.141', 'U', '4e7b1917-ca58-41e4-8d2a-d8539274883b');
+INSERT INTO `his_config_info` VALUES ('61', '79', 'nacosa-flow-rules', 'DEFAULT_GROUP', '', 0x7B227265717565737454696D656F7574223A333030307D, '64343b2f65dde5af33583f52099a3d7d', '2021-03-18 01:26:43', '2021-03-17 17:26:44', null, '192.168.31.141', 'U', '4e7b1917-ca58-41e4-8d2a-d8539274883b');
+INSERT INTO `his_config_info` VALUES ('0', '80', 'nacosa-cluster-map', 'DEFAULT_GROUP', '', 0x5B7B0D0A0922636C69656E74536574223A205B223139322E3136382E33312E3134314039323030222C20223139322E3136382E33312E3134314039323031225D2C2F2F20E8BF99E9878CE79A8469703A706F7274E4B88EE68891E4BBAC636C69656E743149503A6373702E73656E74696E656C2E6170692E706F7274E698AFE4BF9DE68C81E4B880E887B4E79A840D0A09226970223A20223139322E3136382E33312E313431222C2F2F207365727665722069700D0A09226D616368696E654964223A20223139322E3136382E33312E3134314039323033222C2F2F2073657276657249703A6373702E73656E74696E656C2E6170692E706F72740D0A0922706F7274223A2037373137202F2F736572766572E5BA94E794A8E69C8DE58AA1E599A8706F72740D0A0D0A7D5D, '25ec603e919a0d3ce12b7e65b287325d', '2021-03-18 01:34:32', '2021-03-17 17:34:33', null, '192.168.31.141', 'I', '4e7b1917-ca58-41e4-8d2a-d8539274883b');
+INSERT INTO `his_config_info` VALUES ('64', '81', 'nacosa-cluster-map', 'DEFAULT_GROUP', '', 0x5B7B0D0A0922636C69656E74536574223A205B223139322E3136382E33312E3134314039323030222C20223139322E3136382E33312E3134314039323031225D2C2F2F20E8BF99E9878CE79A8469703A706F7274E4B88EE68891E4BBAC636C69656E743149503A6373702E73656E74696E656C2E6170692E706F7274E698AFE4BF9DE68C81E4B880E887B4E79A840D0A09226970223A20223139322E3136382E33312E313431222C2F2F207365727665722069700D0A09226D616368696E654964223A20223139322E3136382E33312E3134314039323033222C2F2F2073657276657249703A6373702E73656E74696E656C2E6170692E706F72740D0A0922706F7274223A2037373137202F2F736572766572E5BA94E794A8E69C8DE58AA1E599A8706F72740D0A0D0A7D5D, '25ec603e919a0d3ce12b7e65b287325d', '2021-03-18 01:35:22', '2021-03-17 17:35:23', null, '192.168.31.141', 'U', '4e7b1917-ca58-41e4-8d2a-d8539274883b');
+INSERT INTO `his_config_info` VALUES ('64', '82', 'nacosa-cluster-map', 'DEFAULT_GROUP', '', 0x5B7B0A0922636C69656E74536574223A205B223139322E3136382E33312E3134314039323030222C20223139322E3136382E33312E3134314039323031225D2C0A09226970223A20223139322E3136382E33312E313431222C0A09226D616368696E654964223A20223139322E3136382E33312E3134314039323033222C0A0922706F7274223A20373731370A7D5D, '424668103cca334c2c2ceb06069929c2', '2021-03-18 01:38:54', '2021-03-17 17:38:54', null, '192.168.31.141', 'U', '4e7b1917-ca58-41e4-8d2a-d8539274883b');
+INSERT INTO `his_config_info` VALUES ('23', '83', 'nacosa', 'DEFAULT_GROUP', '', 0x63757272656E743A0A2020656E763A2074686973206973207561740A6D616E6167656D656E743A0A2020656E64706F696E74733A0A202020207765623A0A2020202020206578706F737572653A0A20202020202020206578636C7564653A20272A270A6C6F6767696E673A0A20206C6576656C3A0A20202020636F6D3A0A202020202020616C69626162613A0A20202020202020206E61636F733A0A20202020202020202020636C69656E743A0A2020202020202020202020206E616D696E673A20696E666F0A7365727665723A0A2020706F72743A20393130300A737072696E673A0A2020636C6F75643A0A202020206E61636F733A0A202020202020646973636F766572793A0A20202020202020207365727665722D616464723A206C6F63616C686F73743A383834380A20202020232073656E74696E656C3A0A20202020232020207472616E73706F72743A0A2020202023202020202064617368626F6172643A206C6F63616C686F73743A383939390A20202020232020202020706F72743A2038373139200A2020202023202020202023E9BB98E8AEA438373139EFBC8CE58187E5A682E8A2ABE58DA0E794A8E4BA86E4BC9AE887AAE58AA8E4BB8E38373139E5BC80E5A78BE4BE9DE6ACA12B31E689ABE68F8FE38082E79BB4E887B3E689BEE588B0E69CAAE8A2ABE58DA0E794A8E79A84E7ABAFE58FA30A202020202320202064617461736F757263653A0A202020202320202020206473313A0A2020202023202020202020206E61636F733A0A20202020232020202020202020207365727665722D616464723A206C6F63616C686F73743A383834380A20202020232020202020202020206461746149643A2073656E74696E656C2D736572766963650A202020202320202020202020202067726F757049643A2044454641554C545F47524F55500A2020202023202020202020202020646174612D747970653A206A736F6E0A202020202320202020202020202072756C652D747970653A20666C6F770A20202020232020202020202020206E616D6573706163653A2034653762313931372D636135382D343165342D386432612D6438353339323734383833620A202020202020202020202020, '0ea765389c2d13872c78ebdb561d8353', '2021-03-18 01:39:10', '2021-03-17 17:39:11', null, '192.168.31.141', 'U', '4e7b1917-ca58-41e4-8d2a-d8539274883b');
+INSERT INTO `his_config_info` VALUES ('64', '84', 'nacosa-cluster-map', 'DEFAULT_GROUP', '', 0x5B7B0A0922636C69656E74536574223A205B223139322E3136382E33312E3134314039323030222C20223139322E3136382E33312E3134314039323031225D2C0A09226970223A20223139322E3136382E33312E313431222C0A09226D616368696E654964223A20223139322E3136382E33312E3134314039323033222C0A0922706F7274223A20393130300A7D5D, 'a0464a86f66792c023a291efab53e82f', '2021-03-18 01:42:44', '2021-03-17 17:42:44', null, '192.168.31.141', 'U', '4e7b1917-ca58-41e4-8d2a-d8539274883b');
+INSERT INTO `his_config_info` VALUES ('64', '85', 'nacosa-cluster-map', 'DEFAULT_GROUP', '', 0x5B7B0A0922636C69656E74536574223A205B223139322E3136382E33312E3134314039313031222C20223139322E3136382E33312E3134314039323031225D2C0A09226970223A20223139322E3136382E33312E313431222C2F2F207365727665722069700A09226D616368696E654964223A20223139322E3136382E33312E3134314039333031222C0A0922706F7274223A2039303039200A7D5D, 'c1cc6fa7408a079e078189d0be7cc230', '2021-03-18 01:47:12', '2021-03-17 17:47:12', null, '192.168.31.141', 'U', '4e7b1917-ca58-41e4-8d2a-d8539274883b');
+INSERT INTO `his_config_info` VALUES ('61', '86', 'nacosa-flow-rules', 'DEFAULT_GROUP', '', 0x5B0A202020207B0A2020202020202020227265736F7572636522203A202268656C6C6F576F726C6433222C20202020200A202020202020202022677261646522203A20312C202020202020202020202020202020202020202020202020200A202020202020202022636F756E7422203A2031302C2020202020202020202020202020202020202020202020200A202020202020202022636C75737465724D6F646522203A2020747275652C2020202020202020202020202020200A202020202020202022636C7573746572436F6E66696722203A207B0A20202020202020202020202022666C6F77496422203A203131312C2020202020202020202020202020202020200A202020202020202020202020227468726573686F6C645479706522203A20312C2020202020202020202020200A2020202020202020202020202266616C6C6261636B546F4C6F63616C5768656E4661696C22203A2074727565200A20202020202020207D0A202020207D0A5D, '1070ea3b0eb44d2378029cca6b7febe6', '2021-03-18 01:48:41', '2021-03-17 17:48:41', null, '192.168.31.141', 'U', '4e7b1917-ca58-41e4-8d2a-d8539274883b');
+INSERT INTO `his_config_info` VALUES ('61', '87', 'nacosa-flow-rules', 'DEFAULT_GROUP', '', 0x5B0A202020207B0A2020202020202020227265736F7572636522203A202268656C6C6F576F726C6433222C20202020200A202020202020202022677261646522203A20312C202020202020202020202020202020202020202020202020200A202020202020202022636F756E7422203A20312C2020202020202020202020202020202020202020202020200A202020202020202022636C75737465724D6F646522203A2020747275652C2020202020202020202020202020200A202020202020202022636C7573746572436F6E66696722203A207B0A20202020202020202020202022666C6F77496422203A203131312C2020202020202020202020202020202020200A202020202020202020202020227468726573686F6C645479706522203A20312C2020202020202020202020200A2020202020202020202020202266616C6C6261636B546F4C6F63616C5768656E4661696C22203A2074727565200A20202020202020207D0A202020207D0A5D, '3953b05342d64242fa430561d0511ee5', '2021-03-18 02:00:53', '2021-03-17 18:00:53', null, '192.168.31.141', 'U', '4e7b1917-ca58-41e4-8d2a-d8539274883b');
+
+-- ----------------------------
+-- Table structure for order_info
+-- ----------------------------
+DROP TABLE IF EXISTS `order_info`;
+CREATE TABLE `order_info` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `order_no` varchar(64) DEFAULT NULL,
+  `order_desc` varchar(255) DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `uid` varchar(64) DEFAULT NULL,
+  `goodsId` varchar(64) DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+
+-- ----------------------------
+-- Records of order_info
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for permissions
 -- ----------------------------
 DROP TABLE IF EXISTS `permissions`;
-CREATE TABLE `permissions`  (
-  `role` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `resource` varchar(512) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `action` varchar(8) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  UNIQUE INDEX `uk_role_permission`(`role`, `resource`, `action`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+CREATE TABLE `permissions` (
+  `role` varchar(50) NOT NULL,
+  `resource` varchar(512) NOT NULL,
+  `action` varchar(8) NOT NULL,
+  UNIQUE KEY `uk_role_permission` (`role`,`resource`,`action`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of permissions
@@ -204,11 +297,11 @@ INSERT INTO `permissions` VALUES ('ROLE_ADMIN', '4e7b1917-ca58-41e4-8d2a-d853927
 -- Table structure for roles
 -- ----------------------------
 DROP TABLE IF EXISTS `roles`;
-CREATE TABLE `roles`  (
-  `username` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `role` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  UNIQUE INDEX `idx_user_role`(`username`, `role`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+CREATE TABLE `roles` (
+  `username` varchar(50) NOT NULL,
+  `role` varchar(50) NOT NULL,
+  UNIQUE KEY `idx_user_role` (`username`,`role`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of roles
@@ -219,59 +312,77 @@ INSERT INTO `roles` VALUES ('nacos', 'ROLE_ADMIN');
 -- Table structure for tenant_capacity
 -- ----------------------------
 DROP TABLE IF EXISTS `tenant_capacity`;
-CREATE TABLE `tenant_capacity`  (
-  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键ID',
-  `tenant_id` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT 'Tenant ID',
-  `quota` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '配额，0表示使用默认值',
-  `usage` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '使用量',
-  `max_size` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '单个配置大小上限，单位为字节，0表示使用默认值',
-  `max_aggr_count` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '聚合子配置最大个数',
-  `max_aggr_size` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '单个聚合数据的子配置大小上限，单位为字节，0表示使用默认值',
-  `max_history_count` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '最大变更历史数量',
-  `gmt_create` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `gmt_modified` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
+CREATE TABLE `tenant_capacity` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `tenant_id` varchar(128) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT 'Tenant ID',
+  `quota` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '配额，0表示使用默认值',
+  `usage` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '使用量',
+  `max_size` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '单个配置大小上限，单位为字节，0表示使用默认值',
+  `max_aggr_count` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '聚合子配置最大个数',
+  `max_aggr_size` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '单个聚合数据的子配置大小上限，单位为字节，0表示使用默认值',
+  `max_history_count` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '最大变更历史数量',
+  `gmt_create` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `gmt_modified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE INDEX `uk_tenant_id`(`tenant_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '租户容量信息表' ROW_FORMAT = Dynamic;
+  UNIQUE KEY `uk_tenant_id` (`tenant_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin ROW_FORMAT=DYNAMIC COMMENT='租户容量信息表';
+
+-- ----------------------------
+-- Records of tenant_capacity
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for tenant_info
 -- ----------------------------
 DROP TABLE IF EXISTS `tenant_info`;
-CREATE TABLE `tenant_info`  (
+CREATE TABLE `tenant_info` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
-  `kp` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'kp',
-  `tenant_id` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT '' COMMENT 'tenant_id',
-  `tenant_name` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT '' COMMENT 'tenant_name',
-  `tenant_desc` varchar(256) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT 'tenant_desc',
-  `create_source` varchar(32) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT 'create_source',
+  `kp` varchar(128) COLLATE utf8_bin NOT NULL COMMENT 'kp',
+  `tenant_id` varchar(128) COLLATE utf8_bin DEFAULT '' COMMENT 'tenant_id',
+  `tenant_name` varchar(128) COLLATE utf8_bin DEFAULT '' COMMENT 'tenant_name',
+  `tenant_desc` varchar(256) COLLATE utf8_bin DEFAULT NULL COMMENT 'tenant_desc',
+  `create_source` varchar(32) COLLATE utf8_bin DEFAULT NULL COMMENT 'create_source',
   `gmt_create` bigint(20) NOT NULL COMMENT '创建时间',
   `gmt_modified` bigint(20) NOT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE INDEX `uk_tenant_info_kptenantid`(`kp`, `tenant_id`) USING BTREE,
-  INDEX `idx_tenant_id`(`tenant_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = 'tenant_info' ROW_FORMAT = Dynamic;
+  UNIQUE KEY `uk_tenant_info_kptenantid` (`kp`,`tenant_id`) USING BTREE,
+  KEY `idx_tenant_id` (`tenant_id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_bin ROW_FORMAT=DYNAMIC COMMENT='tenant_info';
 
 -- ----------------------------
 -- Records of tenant_info
 -- ----------------------------
-INSERT INTO `tenant_info` VALUES (1, '1', '96509aea-8458-4c41-86c2-1506a3d43a45', 'dat', 'dat', 'nacos', 1589270648946, 1589270648946);
-INSERT INTO `tenant_info` VALUES (2, '1', '4e7b1917-ca58-41e4-8d2a-d8539274883b', 'uat', 'uat', 'nacos', 1589270955321, 1589270955321);
+INSERT INTO `tenant_info` VALUES ('1', '1', '96509aea-8458-4c41-86c2-1506a3d43a45', 'dat', 'dat', 'nacos', '1589270648946', '1589270648946');
+INSERT INTO `tenant_info` VALUES ('2', '1', '4e7b1917-ca58-41e4-8d2a-d8539274883b', 'uat', 'uat', 'nacos', '1589270955321', '1589270955321');
 
 -- ----------------------------
 -- Table structure for users
 -- ----------------------------
 DROP TABLE IF EXISTS `users`;
-CREATE TABLE `users`  (
-  `username` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `password` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+CREATE TABLE `users` (
+  `username` varchar(50) NOT NULL,
+  `password` varchar(500) NOT NULL,
   `enabled` tinyint(1) NOT NULL,
   PRIMARY KEY (`username`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES ('nacos', '$2a$10$EuWPZHzz32dJN7jexM34MOeYirDdFAZm2kuWj7VEOJhhZkDrxfvUu', 1);
+INSERT INTO `users` VALUES ('nacos', '$2a$10$EuWPZHzz32dJN7jexM34MOeYirDdFAZm2kuWj7VEOJhhZkDrxfvUu', '1');
 
-SET FOREIGN_KEY_CHECKS = 1;
+-- ----------------------------
+-- Table structure for user_info
+-- ----------------------------
+DROP TABLE IF EXISTS `user_info`;
+CREATE TABLE `user_info` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(255) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
+
+-- ----------------------------
+-- Records of user_info
+-- ----------------------------
